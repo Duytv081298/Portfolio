@@ -78,7 +78,7 @@ export default function GameCard({ game, index }: GameCardProps) {
         {/* Cover Image / Video / Gradient Placeholder */}
         <div className="relative aspect-[16/10] overflow-hidden rounded-t-2xl">
           <GameCardVideo
-            src={game.videoUrl}
+            src={game.videoUrl ? `${process.env.NEXT_PUBLIC_BASE_PATH || ''}${game.videoUrl}` : undefined}
             posterGradient={`linear-gradient(135deg, ${game.coverColor}, ${game.coverColorSecondary})`}
             isHovered={isHovered}
           />

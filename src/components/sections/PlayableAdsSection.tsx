@@ -203,7 +203,7 @@ export default function PlayableAdsSection() {
                 }}
               >
                 <iframe
-                  src={activeAd.publicPath}
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${activeAd.publicPath}`}
                   className="w-full h-full border-0"
                   sandbox="allow-scripts allow-same-origin"
                   title={`Play ${activeAd.title}`}
