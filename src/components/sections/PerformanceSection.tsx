@@ -158,7 +158,7 @@ const perfCards: Omit<PerfCardProps, 'index'>[] = [
 
 export default function PerformanceSection() {
   return (
-    <section id="performance" className="py-24 md:py-32 relative">
+    <section id="performance" className="py-32 md:py-44 relative">
       <div className="section-container">
         <SectionHeader
           accent="performance_metrics"
@@ -168,7 +168,7 @@ export default function PerformanceSection() {
 
         {/* Highlight Stats */}
         <RevealOnScroll>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
             {[
               { value: '60', label: 'FPS Target', suffix: '', color: '#00F5A0' },
               { value: '92', label: 'Draw Call ↓', suffix: '%', color: '#4DA3FF' },
@@ -190,7 +190,7 @@ export default function PerformanceSection() {
         </RevealOnScroll>
 
         {/* Performance Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {perfCards.map((card, index) => (
             <PerfCard key={card.title} {...card} index={index} />
           ))}

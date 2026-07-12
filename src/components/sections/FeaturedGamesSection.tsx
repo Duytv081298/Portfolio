@@ -1,88 +1,82 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import SectionHeader from '@/components/ui/SectionHeader';
-import GameCard from '@/components/game/GameCard';
-import { games } from '@/data/games';
 
-const filters = [
-  { label: 'All', value: 'all' },
-  { label: 'Mobile', value: 'mobile' },
-  { label: 'Playable Ads', value: 'playable' },
-  { label: 'Instant Game', value: 'instant' },
-  { label: 'Web', value: 'web' },
+const upcomingCategories = [
+  {
+    label: 'Mobile Games',
+    value: 'mobile',
+    icon: '📱',
+    desc: 'Hyper Casual & Puzzle games trên iOS/Android',
+    color: '#4DA3FF',
+  },
+  {
+    label: 'Instant Platforms',
+    value: 'instant',
+    icon: '⚡',
+    desc: 'Facebook Instant Games, Snapchat Games',
+    color: '#00F5A0',
+  },
+  {
+    label: 'Web Games',
+    value: 'web',
+    icon: '🌐',
+    desc: 'Browser-based HTML5 games',
+    color: '#7C5CFF',
+  },
 ];
 
 export default function FeaturedGamesSection() {
-  const [activeFilter, setActiveFilter] = useState('all');
-
-  const filteredGames =
-    activeFilter === 'all'
-      ? games
-      : games.filter((g) => g.category === activeFilter);
-
   return (
-    <section id="games" className="py-24 md:py-32 relative">
+    <section id="games" className="py-40 md:py-56 relative bg-bg-secondary/40 border-y border-border/30">
       <div className="section-container">
         <SectionHeader
-          accent="featured_games"
-          title="Featured Games"
-          subtitle="Explore my game portfolio. Each project includes architecture details, optimization techniques, and playable demos."
+          title="Games Portfolio"
+          index="02"
+          accent="instant_games"
+          subtitle="Các game đã ship trên Mobile, Instant Platforms và Web. Case study đang được chuẩn bị."
         />
 
-        {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mb-10">
-          {filters.map((filter) => (
-            <button
-              key={filter.value}
-              onClick={() => setActiveFilter(filter.value)}
-              className={`
-                relative px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300
-                ${
-                  activeFilter === filter.value
-                    ? 'text-primary bg-primary/10 border border-primary/30'
-                    : 'text-text-secondary hover:text-text bg-card border border-border hover:border-border-hover'
-                }
-              `}
-            >
-              {filter.label}
-              {activeFilter === filter.value && (
-                <motion.div
-                  layoutId="filter-indicator"
-                  className="absolute inset-0 rounded-lg border border-primary/30 bg-primary/5"
-                  style={{ zIndex: -1 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
+        {/* Coming Soon Notice */}
+        <div className="flex items-center gap-3 mb-12 py-3 px-4 rounded-xl border border-border bg-card/50 w-full sm:w-fit">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+          <p className="text-text-muted text-sm">
+            Case study chi tiết đang được chuẩn bị — sẽ cập nhật sớm.
+          </p>
         </div>
 
-        {/* Games Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeFilter}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {filteredGames.map((game, index) => (
-              <GameCard key={game.id} game={game} index={index} />
-            ))}
-          </motion.div>
-        </AnimatePresence>
+        {/* Category Placeholders */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {upcomingCategories.map((cat) => (
+            <div
+              key={cat.value}
+              className="relative rounded-xl border p-6 flex items-center gap-5 transition-all duration-300 hover:border-opacity-50"
+              style={{ borderColor: `${cat.color}20`, backgroundColor: `${cat.color}04` }}
+            >
+              {/* Icon */}
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style={{ backgroundColor: `${cat.color}12`, border: `1px solid ${cat.color}20` }}
+              >
+                {cat.icon}
+              </div>
 
-        {/* Empty State */}
-        {filteredGames.length === 0 && (
-          <div className="text-center py-20">
-            <p className="text-text-secondary font-code text-sm">
-              No games in this category yet.
-            </p>
-          </div>
-        )}
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <p className="font-display font-bold text-text text-sm mb-0.5">{cat.label}</p>
+                <p className="text-text-muted text-xs leading-relaxed">{cat.desc}</p>
+              </div>
+
+              {/* Coming Soon badge */}
+              <span
+                className="flex-shrink-0 px-2 py-0.5 rounded text-[9px] font-code font-bold uppercase tracking-wider border"
+                style={{ color: cat.color, borderColor: `${cat.color}30`, backgroundColor: `${cat.color}08` }}
+              >
+                Soon
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -4,6 +4,15 @@ import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
+// Simple seedable pseudorandom number generator for component purity during render
+function seedRandom(seed: number) {
+  let s = seed;
+  return function() {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+}
+
 function Particles({ count = 800 }) {
   const meshRef = useRef<THREE.Points>(null!);
 
@@ -19,14 +28,16 @@ function Particles({ count = 800 }) {
       new THREE.Color('#F5F7FA'),
     ];
 
+    const random = seedRandom(42);
+
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 20;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 20;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 15;
+      pos[i * 3] = (random() - 0.5) * 20;
+      pos[i * 3 + 1] = (random() - 0.5) * 20;
+      pos[i * 3 + 2] = (random() - 0.5) * 15;
 
-      siz[i] = Math.random() * 2 + 0.5;
+      siz[i] = random() * 2 + 0.5;
 
-      const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+      const color = colorPalette[Math.floor(random() * colorPalette.length)];
       col[i * 3] = color.r;
       col[i * 3 + 1] = color.g;
       col[i * 3 + 2] = color.b;

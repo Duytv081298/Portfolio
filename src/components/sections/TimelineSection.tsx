@@ -28,7 +28,7 @@ const timeline: TimelineEntry[] = [
     title: 'Playable Ads Developer',
     description:
       'Chuyên môn hóa vào Playable Ads. Phát triển hệ thống tối ưu bundle size, build pipeline tự động. Tích hợp SDK: AppLovin, IronSource, Meta, TikTok.',
-    skills: ['Playable Ads', 'AppLovin SDK', 'Bundle Optimization', 'TypeScript'],
+    skills: ['Playable Ads', 'Bundle Optimization', 'TypeScript', 'HTML5'],
     color: '#00F5A0',
     icon: '📱',
   },
@@ -53,10 +53,11 @@ export default function TimelineSection() {
   const lineHeight = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%']);
 
   return (
-    <section className="py-24 md:py-32 relative">
+    <section id="career" className="py-40 md:py-56 relative">
       <div className="section-container">
         <SectionHeader
           accent="career_timeline"
+          index="04"
           title="Journey"
           subtitle="My path from Game Developer to Senior Game Developer."
           align="center"

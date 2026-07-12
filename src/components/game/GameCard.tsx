@@ -2,10 +2,7 @@
 
 import { useRef, useState, type MouseEvent } from 'react';
 import { motion } from 'motion/react';
-import { Play, BookOpen, Cpu } from 'lucide-react';
 import { type Game } from '@/data/games';
-import { PlatformBadge } from '@/components/ui/Badge';
-import Link from 'next/link';
 import GameCardVideo from '@/components/game/GameCardVideo';
 
 interface GameCardProps {
@@ -84,27 +81,25 @@ export default function GameCard({ game, index }: GameCardProps) {
           />
 
           {/* Game Title Overlay on Cover */}
-          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isHovered && game.videoUrl ? 'opacity-0' : 'opacity-100'}`}>
+          <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${isHovered ? 'opacity-0' : 'opacity-100'}`}>
             <span className="text-white/90 font-display font-bold text-2xl md:text-3xl text-center px-4 drop-shadow-lg">
               {game.title}
             </span>
           </div>
 
-          {/* Hover Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-bg-primary/90 via-bg-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-            <div className="flex gap-2">
-              <Link
-                href={`/games/${game.slug}`}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary text-bg-primary text-xs font-medium hover:bg-primary/90 transition-colors"
-              >
-                <BookOpen size={12} />
-                Case Study
-              </Link>
-              <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border text-text text-xs font-medium hover:border-primary/50 transition-colors">
-                <Play size={12} />
-                Demo
-              </button>
+          {/* Hover Overlay - Featured Waiting for Update */}
+          <div className="absolute inset-0 bg-bg-primary/95 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-center items-center p-6 text-center">
+            <div className="flex gap-2 mb-3">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-code font-bold uppercase tracking-wider bg-primary/10 border border-primary/20 text-primary">
+                ⚡ Featured
+              </span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-code font-bold uppercase tracking-wider bg-accent/10 border border-accent/20 text-accent">
+                🔒 Chờ update
+              </span>
             </div>
+            <p className="text-text-secondary text-[11px] leading-relaxed max-w-[220px]">
+              Case Study chi tiết của dự án game này đang được chuẩn bị và sẽ cập nhật sau. Hãy xem các bản Playable Ads ở phần dưới nhé!
+            </p>
           </div>
 
           {/* Engine Badge */}
@@ -117,36 +112,14 @@ export default function GameCard({ game, index }: GameCardProps) {
 
         {/* Info Section */}
         <div className="p-5">
-          {/* Title & Genre */}
-          <div className="mb-3">
+          {/* Title & Coming soon */}
+          <div>
             <h3 className="font-display font-semibold text-lg text-text group-hover:text-primary transition-colors duration-200">
               {game.title}
             </h3>
-            <p className="text-text-secondary text-sm mt-0.5">{game.subtitle}</p>
-          </div>
-
-          {/* Genre & Stats */}
-          <div className="flex items-center gap-3 mb-3 text-xs text-text-muted font-code">
-            <span className="flex items-center gap-1">
-              <Cpu size={12} />
-              {game.genre}
-            </span>
-            <span>·</span>
-            <span>
-              {game.optimizations[0]?.metric}: {game.optimizations[0]?.before} → {game.optimizations[0]?.after}
-            </span>
-          </div>
-
-          {/* Platform Badges */}
-          <div className="flex flex-wrap gap-1.5">
-            {game.platforms.slice(0, 3).map((platform) => (
-              <PlatformBadge key={platform} platform={platform} />
-            ))}
-            {game.platforms.length > 3 && (
-              <span className="text-xs text-text-muted font-code">
-                +{game.platforms.length - 3}
-              </span>
-            )}
+            <p className="text-accent text-xs font-code mt-1.5 uppercase tracking-wider select-none font-bold">
+              Coming soon...
+            </p>
           </div>
         </div>
 

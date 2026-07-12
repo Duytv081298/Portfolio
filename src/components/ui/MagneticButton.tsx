@@ -63,15 +63,15 @@ export default function MagneticButton({
   };
 
   const sizeStyles = {
-    sm: 'px-4 py-2 text-sm gap-1.5',
-    md: 'px-6 py-3 text-sm gap-2',
-    lg: 'px-8 py-4 text-base gap-2.5',
+    sm: 'py-2 text-sm gap-1.5',
+    md: 'py-3 text-sm gap-2',
+    lg: 'py-4 text-base gap-2.5',
   };
 
   const baseStyles = `
     inline-flex items-center justify-center font-display font-medium
     rounded-[10px] cursor-pointer transition-all duration-300
-    relative overflow-hidden select-none no-underline
+    relative overflow-hidden select-none no-underline whitespace-nowrap flex-shrink-0
     ${variantStyles[variant]}
     ${sizeStyles[size]}
     ${className}
@@ -97,9 +97,18 @@ export default function MagneticButton({
     </>
   );
 
+  const horizontalPadding = {
+    sm: '16px',
+    md: '22px',
+    lg: '28px',
+  };
+
   const motionProps = {
-    ref: buttonRef as React.Ref<any>,
     className: baseStyles,
+    style: {
+      paddingLeft: horizontalPadding[size],
+      paddingRight: horizontalPadding[size],
+    },
     animate: { x: position.x, y: position.y },
     transition: { type: 'spring' as const, stiffness: 300, damping: 20, mass: 0.5 },
     onMouseMove: handleMouseMove,
@@ -122,5 +131,12 @@ export default function MagneticButton({
     );
   }
 
-  return <motion.button {...motionProps}>{content}</motion.button>;
+  return (
+    <motion.button
+      {...motionProps}
+      ref={buttonRef as React.Ref<HTMLButtonElement>}
+    >
+      {content}
+    </motion.button>
+  );
 }

@@ -1,0 +1,437 @@
+{
+  "arrow": [
+    {
+      "name": "PA123_Knit_Away_200426",
+      "filename": "PA123_Knit_Away_Duy_200426_applovin.html",
+      "publicPath": "/playable/arrow/PA123_Knit_Away_Duy_200426_applovin.html"
+    },
+    {
+      "name": "PA124_Knit_Away_200426",
+      "filename": "PA124_Knit_Away_Duy_200426_applovin.html",
+      "publicPath": "/playable/arrow/PA124_Knit_Away_Duy_200426_applovin.html"
+    },
+    {
+      "name": "PA125_Knit_Away_210426",
+      "filename": "PA125_Knit_Away_Duy_210426_applovin.html",
+      "publicPath": "/playable/arrow/PA125_Knit_Away_Duy_210426_applovin.html"
+    }
+  ],
+  "ball-away": [
+    {
+      "name": "Ball_Away_V8_151025",
+      "filename": "Ball_Away_Duy_V8_151025_applovin.html",
+      "publicPath": "/playable/ball-away/Ball_Away_Duy_V8_151025_applovin.html"
+    },
+    {
+      "name": "Ball_Away_V9_161025",
+      "filename": "Ball_Away_Duy_V9_161025_applovin.html",
+      "publicPath": "/playable/ball-away/Ball_Away_Duy_V9_161025_applovin.html"
+    }
+  ],
+  "block-buster": [
+    {
+      "name": "BlockBuster_V15_07082024",
+      "filename": "BlockBuster_V15_Duy_07082024_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V15_Duy_07082024_AppLovin.html"
+    },
+    {
+      "name": "BlockBuster_V16_170924",
+      "filename": "BlockBuster_V16_Duy_170924_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V16_Duy_170924_AppLovin.html"
+    },
+    {
+      "name": "BlockBuster_V18_180924",
+      "filename": "BlockBuster_V18_Duy_180924_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V18_Duy_180924_AppLovin.html"
+    },
+    {
+      "name": "BlockBuster_V23_2_251124",
+      "filename": "BlockBuster_V23_2_Duy_251124_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V23_2_Duy_251124_AppLovin.html"
+    },
+    {
+      "name": "BlockBuster_V24_261124",
+      "filename": "BlockBuster_V24_Duy_261124_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V24_Duy_261124_AppLovin.html"
+    },
+    {
+      "name": "BlockBuster_V25_2_261124",
+      "filename": "BlockBuster_V25_2_Duy_261124_AppLovin.html",
+      "publicPath": "/playable/block-buster/BlockBuster_V25_2_Duy_261124_AppLovin.html"
+    },
+    {
+      "name": "BPQ_V1_260824",
+      "filename": "BPQ_V1_Duy_260824_AppLovin.html",
+      "publicPath": "/playable/block-buster/BPQ_V1_Duy_260824_AppLovin.html"
+    }
+  ],
+  "block-rotate": [
+    {
+      "name": "P_540_v10_AL",
+      "filename": "P_540_v10_AL.html",
+      "publicPath": "/playable/block-rotate/P_540_v10_AL.html"
+    }
+  ],
+  "blockhole": [
+    {
+      "name": "BlockHole_V16_111225",
+      "filename": "BlockHole_Duy_V16_111225_applovin.html",
+      "publicPath": "/playable/blockhole/BlockHole_Duy_V16_111225_applovin.html"
+    },
+    {
+      "name": "BlockHole_V22_160326",
+      "filename": "BlockHole_Duy_V22_160326_applovin.html",
+      "publicPath": "/playable/blockhole/BlockHole_Duy_V22_160326_applovin.html"
+    }
+  ],
+  "bloom-sort": [
+    {
+      "name": "BloomSort_V14_151225",
+      "filename": "BloomSort_V14_Duy_151225_applovin.html",
+      "publicPath": "/playable/bloom-sort/BloomSort_V14_Duy_151225_applovin.html"
+    },
+    {
+      "name": "BloomSort_V3_180725",
+      "filename": "BloomSort_V3_Duy_180725_applovin.html",
+      "publicPath": "/playable/bloom-sort/BloomSort_V3_Duy_180725_applovin.html"
+    },
+    {
+      "name": "BloomSort_V4_011025",
+      "filename": "BloomSort_V4_Duy_011025_AppLovin.html",
+      "publicPath": "/playable/bloom-sort/BloomSort_V4_Duy_011025_AppLovin.html"
+    }
+  ],
+  "bus-screw": [
+    {
+      "name": "BusScrew_V10_180425",
+      "filename": "BusScrew_V10_Duy_180425_AppLovin.html",
+      "publicPath": "/playable/bus-screw/BusScrew_V10_Duy_180425_AppLovin.html"
+    },
+    {
+      "name": "BusScrew_V1_24012025",
+      "filename": "BusScrew_V1_Duy_24012025_AppLovin.html",
+      "publicPath": "/playable/bus-screw/BusScrew_V1_Duy_24012025_AppLovin.html"
+    },
+    {
+      "name": "BusScrew_V2_04022025",
+      "filename": "BusScrew_V2_Duy_04022025_AppLovin.html",
+      "publicPath": "/playable/bus-screw/BusScrew_V2_Duy_04022025_AppLovin.html"
+    },
+    {
+      "name": "BusScrew_V8_040425",
+      "filename": "BusScrew_V8_Duy_040425_AppLovin.html",
+      "publicPath": "/playable/bus-screw/BusScrew_V8_Duy_040425_AppLovin.html"
+    }
+  ],
+  "cake-sort": [
+    {
+      "name": "CakeSort_V10_281125",
+      "filename": "CakeSort_V10_Duy_281125_applovin.html",
+      "publicPath": "/playable/cake-sort/CakeSort_V10_Duy_281125_applovin.html"
+    },
+    {
+      "name": "CakeSort_V4_271125_VIDEO",
+      "filename": "CakeSort_V4_Duy_271125_VIDEO.html",
+      "publicPath": "/playable/cake-sort/CakeSort_V4_Duy_271125_VIDEO.html"
+    },
+    {
+      "name": "CakeSort_V8_281125_VIDEO",
+      "filename": "CakeSort_V8_Duy_281125_VIDEO.html",
+      "publicPath": "/playable/cake-sort/CakeSort_V8_Duy_281125_VIDEO.html"
+    }
+  ],
+  "car-blast": [
+    {
+      "name": "CarBlast_V16_SoundBG_010426",
+      "filename": "CarBlast_Duy_V16_SoundBG_010426_applovin.html",
+      "publicPath": "/playable/car-blast/CarBlast_Duy_V16_SoundBG_010426_applovin.html"
+    },
+    {
+      "name": "CarBlast_V2_long_200126",
+      "filename": "CarBlast_Duy_V2_long_200126_applovin.html",
+      "publicPath": "/playable/car-blast/CarBlast_Duy_V2_long_200126_applovin.html"
+    }
+  ],
+  "cat-stack": [
+    {
+      "name": "CatStack_V1_04032026",
+      "filename": "CatStack_V1_Duy_04032026_applovin.html",
+      "publicPath": "/playable/cat-stack/CatStack_V1_Duy_04032026_applovin.html"
+    },
+    {
+      "name": "CatStack_V7_030426",
+      "filename": "CatStack_V7_Duy_030426_applovin.html",
+      "publicPath": "/playable/cat-stack/CatStack_V7_Duy_030426_applovin.html"
+    },
+    {
+      "name": "P_527_v24_AL",
+      "filename": "P_527_v24_AL.html",
+      "publicPath": "/playable/cat-stack/P_527_v24_AL.html"
+    }
+  ],
+  "coffee-hole": [
+    {
+      "name": "Coffee_Hole_V1_110725",
+      "filename": "Coffee_Hole_Duy_V1_110725_AppLovin.html",
+      "publicPath": "/playable/coffee-hole/Coffee_Hole_Duy_V1_110725_AppLovin.html"
+    }
+  ],
+  "coffee-please": [
+    {
+      "name": "AppLovin",
+      "filename": "AppLovin.html",
+      "publicPath": "/playable/coffee-please/AppLovin.html"
+    },
+    {
+      "name": "Coffee_Please_V12_180325",
+      "filename": "Coffee_Please_Duy_V12_180325_applovin.html",
+      "publicPath": "/playable/coffee-please/Coffee_Please_Duy_V12_180325_applovin.html"
+    },
+    {
+      "name": "Coffee_Please_V7_271224",
+      "filename": "Coffee_Please_Duy_V7_271224.html",
+      "publicPath": "/playable/coffee-please/Coffee_Please_Duy_V7_271224.html"
+    },
+    {
+      "name": "CoffePack_v9",
+      "filename": "CoffePack_v9_applovin.html",
+      "publicPath": "/playable/coffee-please/CoffePack_v9_applovin.html"
+    }
+  ],
+  "color-nuts-jam": [
+    {
+      "name": "Color_Nuts_Jam_V1_160525",
+      "filename": "Color_Nuts_Jam_V1_Duy_160525_applovin.html",
+      "publicPath": "/playable/color-nuts-jam/Color_Nuts_Jam_V1_Duy_160525_applovin.html"
+    },
+    {
+      "name": "Color_Nuts_Jam_V2_220525",
+      "filename": "Color_Nuts_Jam_V2_Duy_220525_applovin.html",
+      "publicPath": "/playable/color-nuts-jam/Color_Nuts_Jam_V2_Duy_220525_applovin.html"
+    }
+  ],
+  "dreamy-harverst": [
+    {
+      "name": "Dreamy_Harverst_V7_290825",
+      "filename": "Dreamy_Harverst_V7_Duy_290825_applovin.html",
+      "publicPath": "/playable/dreamy-harverst/Dreamy_Harverst_V7_Duy_290825_applovin.html"
+    }
+  ],
+  "dreamyroom": [
+    {
+      "name": "Dreamyroom_V1_150925",
+      "filename": "Dreamyroom_V1_Duy_150925_applovin.html",
+      "publicPath": "/playable/dreamyroom/Dreamyroom_V1_Duy_150925_applovin.html"
+    },
+    {
+      "name": "P_509_v18_AL",
+      "filename": "P_509_v18_AL.html",
+      "publicPath": "/playable/dreamyroom/P_509_v18_AL.html"
+    },
+    {
+      "name": "P_509_v19_AL",
+      "filename": "P_509_v19_AL.html",
+      "publicPath": "/playable/dreamyroom/P_509_v19_AL.html"
+    }
+  ],
+  "drink-sort": [
+    {
+      "name": "DrinkSort_V1_301025",
+      "filename": "DrinkSort_Duy_V1_301025_applovin.html",
+      "publicPath": "/playable/drink-sort/DrinkSort_Duy_V1_301025_applovin.html"
+    },
+    {
+      "name": "DrinkSort_V8_020126",
+      "filename": "DrinkSort_Duy_V8_020126_applovin.html",
+      "publicPath": "/playable/drink-sort/DrinkSort_Duy_V8_020126_applovin.html"
+    },
+    {
+      "name": "SandSortV2_221225",
+      "filename": "SandSortV2_221225_applovin.html",
+      "publicPath": "/playable/drink-sort/SandSortV2_221225_applovin.html"
+    }
+  ],
+  "fall-guy": [
+    {
+      "name": "Fall_Guy_Legend_V4_250924",
+      "filename": "Fall_Guy_Legend_Duy_V4_250924_applovin.html",
+      "publicPath": "/playable/fall-guy/Fall_Guy_Legend_Duy_V4_250924_applovin.html"
+    }
+  ],
+  "farm-tap": [
+    {
+      "name": "FarmTap_V83_110526",
+      "filename": "FarmTap_V83_Duy_110526_applovin.html",
+      "publicPath": "/playable/farm-tap/FarmTap_V83_Duy_110526_applovin.html"
+    },
+    {
+      "name": "P_505_v92_AL_unicorn",
+      "filename": "P_505_v92_AL_unicorn.html",
+      "publicPath": "/playable/farm-tap/P_505_v92_AL_unicorn.html"
+    }
+  ],
+  "foodie-mania": [
+    {
+      "name": "P_510_V19_AL",
+      "filename": "P_510_V19_AL.html",
+      "publicPath": "/playable/foodie-mania/P_510_V19_AL.html"
+    }
+  ],
+  "goods-frenzy": [
+    {
+      "name": "GoodsFrenzy_V37_171225",
+      "filename": "GoodsFrenzy_Duy_V37_171225_applovin.html",
+      "publicPath": "/playable/goods-frenzy/GoodsFrenzy_Duy_V37_171225_applovin.html"
+    },
+    {
+      "name": "P_466_v45_AL",
+      "filename": "P_466_v45_AL.html",
+      "publicPath": "/playable/goods-frenzy/P_466_v45_AL.html"
+    }
+  ],
+  "helpthem": [
+    {
+      "name": "HT_V12_051224",
+      "filename": "HT_V12_Duy_051224_AppLovin.html",
+      "publicPath": "/playable/helpthem/HT_V12_Duy_051224_AppLovin.html"
+    },
+    {
+      "name": "HT_V15_100425",
+      "filename": "HT_V15_Duy_100425_AppLovin.html",
+      "publicPath": "/playable/helpthem/HT_V15_Duy_100425_AppLovin.html"
+    }
+  ],
+  "knit-away": [
+    {
+      "name": "PA121_HedgehogBall_130426",
+      "filename": "PA121_HedgehogBall_Duy_130426_applovin.html",
+      "publicPath": "/playable/knit-away/PA121_HedgehogBall_Duy_130426_applovin.html"
+    },
+    {
+      "name": "PA141_NhoFake_140526",
+      "filename": "PA141_NhoFake_Duy_140526_applovin.html",
+      "publicPath": "/playable/knit-away/PA141_NhoFake_Duy_140526_applovin.html"
+    },
+    {
+      "name": "P_491_v192_AL_Planet",
+      "filename": "P_491_v192_AL_Planet.html",
+      "publicPath": "/playable/knit-away/P_491_v192_AL_Planet.html"
+    }
+  ],
+  "number-match": [
+    {
+      "name": "NM_v12_221024",
+      "filename": "NM_Duy_v12_221024_AppLovin.html",
+      "publicPath": "/playable/number-match/NM_Duy_v12_221024_AppLovin.html"
+    },
+    {
+      "name": "NM_v15_121124",
+      "filename": "NM_Duy_v15_121124_AppLovin.html",
+      "publicPath": "/playable/number-match/NM_Duy_v15_121124_AppLovin.html"
+    },
+    {
+      "name": "NM_v6_update_130924",
+      "filename": "NM_Duy_v6_update_130924_AppLovin.html",
+      "publicPath": "/playable/number-match/NM_Duy_v6_update_130924_AppLovin.html"
+    },
+    {
+      "name": "NM_v7_130924",
+      "filename": "NM_Duy_v7_130924_AppLovin.html",
+      "publicPath": "/playable/number-match/NM_Duy_v7_130924_AppLovin.html"
+    },
+    {
+      "name": "NM_v9_160924",
+      "filename": "NM_Duy_v9_160924_AppLovin.html",
+      "publicPath": "/playable/number-match/NM_Duy_v9_160924_AppLovin.html"
+    }
+  ],
+  "piggyaway": [
+    {
+      "name": "P_538_v12_AL",
+      "filename": "P_538_v12_AL.html",
+      "publicPath": "/playable/piggyaway/P_538_v12_AL.html"
+    },
+    {
+      "name": "P_538_v21_AL_blue_hat",
+      "filename": "P_538_v21_AL_blue_hat.html",
+      "publicPath": "/playable/piggyaway/P_538_v21_AL_blue_hat.html"
+    }
+  ],
+  "satistory": [
+    {
+      "name": "Satistory_V95_120526",
+      "filename": "Satistory_V95_Duy_120526_applovin.html",
+      "publicPath": "/playable/satistory/Satistory_V95_Duy_120526_applovin.html"
+    },
+    {
+      "name": "Satistory_V98_180526",
+      "filename": "Satistory_V98_Duy_180526_applovin.html",
+      "publicPath": "/playable/satistory/Satistory_V98_Duy_180526_applovin.html"
+    }
+  ],
+  "screw-land": [
+    {
+      "name": "P_463_V100_AL",
+      "filename": "P_463_V100_AL.html",
+      "publicPath": "/playable/screw-land/P_463_V100_AL.html"
+    },
+    {
+      "name": "P_463_v104_AL",
+      "filename": "P_463_v104_AL.html",
+      "publicPath": "/playable/screw-land/P_463_v104_AL.html"
+    }
+  ],
+  "screw-puzzle-nuts-and-bolts": [
+    {
+      "name": "CP_V5_240924",
+      "filename": "CP_V5_Duy_240924_AppLovin.html",
+      "publicPath": "/playable/screw-puzzle-nuts-and-bolts/CP_V5_Duy_240924_AppLovin.html"
+    },
+    {
+      "name": "NB_V15_10_6_2024",
+      "filename": "NB_V15_Duy_10_6_2024_AppLovin.html",
+      "publicPath": "/playable/screw-puzzle-nuts-and-bolts/NB_V15_Duy_10_6_2024_AppLovin.html"
+    },
+    {
+      "name": "NB_V19_17072024",
+      "filename": "NB_V19_Duy_17072024_AppLovin.html",
+      "publicPath": "/playable/screw-puzzle-nuts-and-bolts/NB_V19_Duy_17072024_AppLovin.html"
+    },
+    {
+      "name": "NB_V20_01082024",
+      "filename": "NB_V20_Duy_01082024_AppLovin.html",
+      "publicPath": "/playable/screw-puzzle-nuts-and-bolts/NB_V20_Duy_01082024_AppLovin.html"
+    }
+  ],
+  "screw-town": [
+    {
+      "name": "P_495_V42_AL_Corn",
+      "filename": "P_495_V42_AL_Corn.html",
+      "publicPath": "/playable/screw-town/P_495_V42_AL_Corn.html"
+    },
+    {
+      "name": "P_495_V44_AL_Cube_360_45Move",
+      "filename": "P_495_V44_AL_Cube_360_45Move.html",
+      "publicPath": "/playable/screw-town/P_495_V44_AL_Cube_360_45Move.html"
+    }
+  ],
+  "tidy-master": [
+    {
+      "name": "P_451_v61_AL",
+      "filename": "P_451_v61_AL.html",
+      "publicPath": "/playable/tidy-master/P_451_v61_AL.html"
+    }
+  ],
+  "wordsout": [
+    {
+      "name": "P_545_v8_AL",
+      "filename": "P_545_v8_AL.html",
+      "publicPath": "/playable/wordsout/P_545_v8_AL.html"
+    },
+    {
+      "name": "P_545_v9_AL",
+      "filename": "P_545_v9_AL.html",
+      "publicPath": "/playable/wordsout/P_545_v9_AL.html"
+    }
+  ]
+}

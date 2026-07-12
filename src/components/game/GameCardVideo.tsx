@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 
 interface GameCardVideoProps {
   src?: string;
@@ -20,19 +19,13 @@ export default function GameCardVideo({ src, posterGradient, isHovered }: GameCa
     if (isHovered) {
       const playPromise = videoRef.current.play();
       if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((error) => {
-            console.log('Autoplay was prevented or video failed to load:', error);
-            setIsPlaying(false);
-          });
+        playPromise.catch((error) => {
+          console.log('Autoplay was prevented or video failed to load:', error);
+        });
       }
     } else {
       videoRef.current.pause();
       videoRef.current.currentTime = 0;
-      setIsPlaying(false);
     }
   }, [isHovered, src]);
 
@@ -52,6 +45,8 @@ export default function GameCardVideo({ src, posterGradient, isHovered }: GameCa
           loop
           muted
           playsInline
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
           onLoadedData={() => setIsLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
             isPlaying && isLoaded ? 'opacity-100 scale-105' : 'opacity-0 scale-100'

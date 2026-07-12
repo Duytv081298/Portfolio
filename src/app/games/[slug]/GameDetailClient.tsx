@@ -160,7 +160,7 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
               </div>
               <div>
                 <h2 className="text-2xl font-display font-bold text-text">Architecture</h2>
-                <p className="text-text-muted text-xs font-code">// system_design</p>
+                <p className="text-text-muted text-xs font-code">{"// system_design"}</p>
               </div>
             </div>
             <div className="bg-card border border-border rounded-xl p-6">
@@ -179,7 +179,7 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold text-text">Challenges</h2>
-                  <p className="text-text-muted text-xs font-code">// problems_faced</p>
+                  <p className="text-text-muted text-xs font-code">{"// problems_faced"}</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -206,7 +206,7 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-display font-bold text-text">Solutions</h2>
-                  <p className="text-text-muted text-xs font-code">// implementation</p>
+                  <p className="text-text-muted text-xs font-code">{"// implementation"}</p>
                 </div>
               </div>
               <div className="space-y-3">
@@ -237,7 +237,7 @@ export default function GameDetailClient({ game }: GameDetailClientProps) {
                 <h2 className="text-2xl font-display font-bold text-text">
                   Performance Optimization
                 </h2>
-                <p className="text-text-muted text-xs font-code">// before_vs_after</p>
+                <p className="text-text-muted text-xs font-code">{"// before_vs_after"}</p>
               </div>
             </div>
           </RevealOnScroll>

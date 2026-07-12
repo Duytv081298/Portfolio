@@ -34,7 +34,7 @@ const contactLinks = [
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="py-24 md:py-32 relative overflow-hidden">
+    <section id="contact" className="py-40 md:py-56 relative overflow-hidden bg-bg-secondary/40 border-t border-border/30">
       {/* Background Glow */}
       <GlowOrb color="#4DA3FF" size={400} top="20%" left="80%" delay={0} />
       <GlowOrb color="#7C5CFF" size={350} top="60%" left="10%" delay={3} />
@@ -109,16 +109,22 @@ export default function ContactSection() {
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-4">
                 <MagneticButton
                   variant="primary"
                   size="lg"
                   href="mailto:duytv0812@gmail.com"
+                  className="w-full sm:w-auto"
                 >
                   <Mail size={18} />
                   Gửi Email
                 </MagneticButton>
-                <MagneticButton variant="ghost" size="lg" href="#">
+                <MagneticButton
+                  variant="ghost"
+                  size="lg"
+                  href="#"
+                  className="w-full sm:w-auto"
+                >
                   <FileText size={18} />
                   Download CV
                 </MagneticButton>

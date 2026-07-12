@@ -114,7 +114,7 @@ export const games: Game[] = [
     challenges: [
       'Managing multiple simultaneous customer orders without UI clutter',
       'Fluid pour animations with dynamic liquid physics',
-      'Tight playable ad size constraints (< 3MB)',
+      'Tight Playable Ad size constraints (< 3MB)',
     ],
     solutions: [
       'Scrollable queue with priority indicators and visual countdown timers',
@@ -209,7 +209,7 @@ export const games: Game[] = [
     subtitle: 'Stack cute cats as high as you can',
     genre: 'Hyper Casual',
     engine: 'Cocos Creator',
-    platforms: ['Playable Ad', 'AppLovin', 'Instant Game'],
+    platforms: ['Playable Ad', 'AppLovin', 'Playable Ad'],
     coverColor: '#FF5E7E',
     coverColorSecondary: '#D63657',
     description:
@@ -219,7 +219,7 @@ export const games: Game[] = [
     challenges: [
       'Precise physics stacking that feels fair to players',
       'Spine animations syncing with physics bodies',
-      'Facebook Instant Game API integration',
+      'Facebook Playable API integration',
     ],
     solutions: [
       'Custom physics material with high friction and adjusted restitution',

@@ -41,16 +41,17 @@ const levelLabels = {
 
 export default function TechStackSection() {
   return (
-    <section id="tech" className="py-24 md:py-32 relative">
+    <section id="tech" className="py-40 md:py-56 relative bg-bg-secondary/40 border-y border-border/30">
       <div className="section-container">
         <SectionHeader
           accent="tech_stack"
+          index="03"
           title="Tech Stack"
           subtitle="Tools and technologies I use to build high-performance games."
         />
 
         {/* Tech Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
           {techStack.map((tech, index) => (
             <RevealOnScroll key={tech.name} delay={index * 0.05}>
               <motion.div
