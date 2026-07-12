@@ -1,134 +1,98 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { Mail, FileText, Send } from 'lucide-react';
-import { GithubIcon, FacebookIcon } from '@/components/ui/BrandIcons';
-import SectionHeader from '@/components/ui/SectionHeader';
-import MagneticButton from '@/components/ui/MagneticButton';
+import { Download, Gamepad2, Mail, MapPin, Send } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { FacebookIcon, GithubIcon } from '@/components/ui/BrandIcons';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
-import GlowOrb from '@/components/effects/GlowOrb';
 
-const contactLinks = [
-  {
-    label: 'Email',
-    value: 'duytv0812@gmail.com',
-    href: 'mailto:duytv0812@gmail.com',
-    icon: <Mail size={20} />,
-    color: '#4DA3FF',
-  },
-  {
-    label: 'GitHub',
-    value: 'Duytv081298',
-    href: 'https://github.com/Duytv081298',
-    icon: <GithubIcon size={20} />,
-    color: '#F5F7FA',
-  },
-  {
-    label: 'Facebook',
-    value: 'Duytv98',
-    href: 'https://web.facebook.com/Duytv98',
-    icon: <FacebookIcon size={20} />,
-    color: '#4DA3FF',
-  },
+const contactDetails = [
+  { label: 'Email', value: 'duytv0812@gmail.com', Icon: Mail },
+  { label: 'Location', value: 'Ho Chi Minh City, Vietnam', Icon: MapPin },
+  { label: 'Resume', value: 'Download CV', Icon: Download },
+];
+
+const contactActions = [
+  { label: 'GitHub', href: 'https://github.com/Duytv081298', Icon: GithubIcon },
+  { label: 'Facebook', href: 'https://web.facebook.com/Duytv98', Icon: FacebookIcon },
+  { label: 'Email', href: 'mailto:duytv0812@gmail.com', Icon: Mail },
+  { label: 'Download CV', href: '#', Icon: Download },
 ];
 
 export default function ContactSection() {
+  const reduceMotion = useReducedMotion();
+
   return (
-    <section id="contact" className="py-40 md:py-56 relative overflow-hidden bg-bg-secondary/40 border-t border-border/30">
-      {/* Background Glow */}
-      <GlowOrb color="#4DA3FF" size={400} top="20%" left="80%" delay={0} />
-      <GlowOrb color="#7C5CFF" size={350} top="60%" left="10%" delay={3} />
+    <section id="contact" className="relative overflow-hidden border-t border-border/50 bg-bg-secondary/45 py-10 md:py-12">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_62%,rgba(124,92,255,0.12),transparent_30%),radial-gradient(circle_at_82%_30%,rgba(77,163,255,0.08),transparent_30%)]" />
 
       <div className="section-container relative z-10">
-        <SectionHeader
-          accent="get_in_touch"
-          title="Contact"
-          subtitle="Interested in working together? Let's build something great."
-          align="center"
-        />
+        <RevealOnScroll className="mb-6">
+          <p className="mb-2 font-code text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">Contact</p>
+          <h2 className="font-display text-2xl font-bold tracking-[-0.025em] text-text md:text-[32px]">
+            Let&apos;s build something great together!
+          </h2>
+          <p className="mt-1.5 text-xs text-text-secondary">Interested in working together? Let&apos;s build something amazing.</p>
+        </RevealOnScroll>
 
-        {/* Contact Card */}
         <RevealOnScroll>
-          <div className="max-w-2xl mx-auto">
-            <div className="glass rounded-2xl p-8 md:p-12">
-              {/* Heading */}
-              <div className="text-center mb-10">
-                <motion.div
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 border border-primary/20 mb-6"
-                  animate={{ scale: [1, 1.02, 1] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  <span className="text-primary text-sm font-code">Available for work</span>
-                </motion.div>
-                <h3 className="text-2xl md:text-3xl font-display font-bold text-text mb-3">
-                  Hãy kết nối với tôi
-                </h3>
-                <p className="text-text-secondary text-sm max-w-md mx-auto">
-                  Tôi luôn sẵn sàng cho các dự án Game Development, Playable Ads, hoặc tư vấn kỹ thuật.
-                </p>
-              </div>
+          <div className="grid overflow-hidden rounded-xl border border-border bg-[#07101d]/90 shadow-[0_18px_55px_rgba(0,0,0,0.25)] md:min-h-[230px] md:grid-cols-[1.05fr_1.45fr_0.92fr]">
+            <div className="relative grid min-h-[190px] place-items-center overflow-hidden border-b border-border/60 bg-[radial-gradient(circle_at_center,rgba(74,58,190,0.28),transparent_55%)] md:min-h-0 md:border-r md:border-b-0">
+              <div className="absolute left-[15%] top-[18%] h-20 w-20 rotate-12 rounded-2xl border border-primary/10" aria-hidden="true" />
+              <div className="absolute bottom-[14%] right-[17%] h-14 w-14 -rotate-12 border border-purple/15" aria-hidden="true" />
+              <motion.div
+                animate={reduceMotion ? undefined : { y: [0, -7, 0], rotate: [-4, 1, -4] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="relative"
+              >
+                <div className="absolute inset-0 scale-125 rounded-full bg-purple/20 blur-3xl" aria-hidden="true" />
+                <Gamepad2
+                  size={122}
+                  strokeWidth={1.15}
+                  className="relative -rotate-6 text-[#4E95FF] drop-shadow-[0_0_22px_rgba(92,75,255,0.75)]"
+                  aria-hidden="true"
+                />
+                <span className="absolute left-[26px] top-[47px] h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_10px_rgba(0,217,126,0.8)]" aria-hidden="true" />
+                <span className="absolute right-[28px] top-[49px] h-2.5 w-2.5 rounded-full bg-purple shadow-[0_0_10px_rgba(155,116,255,0.8)]" aria-hidden="true" />
+              </motion.div>
+            </div>
 
-              {/* Contact Links */}
-              <div className="space-y-4 mb-10">
-                {contactLinks.map((link, index) => (
-                  <motion.a
-                    key={link.label}
-                    href={link.href}
-                    target={link.href.startsWith('http') ? '_blank' : undefined}
-                    rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-card/50 border border-border hover:border-primary/30 hover:bg-card transition-all duration-300 group"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    whileHover={{ x: 4 }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-xl flex items-center justify-center border transition-colors duration-300"
-                      style={{
-                        borderColor: `${link.color}33`,
-                        backgroundColor: `${link.color}11`,
-                        color: link.color,
-                      }}
-                    >
-                      {link.icon}
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-text-muted text-xs font-code">{link.label}</p>
-                      <p className="text-text text-sm font-medium group-hover:text-primary transition-colors">
-                        {link.value}
-                      </p>
-                    </div>
-                    <Send
-                      size={14}
-                      className="text-text-muted opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                    />
-                  </motion.a>
+            <div className="flex flex-col justify-center border-b border-border/60 p-7 md:border-r md:border-b-0 md:px-9">
+              <h3 className="font-display text-lg font-bold text-text">Get in touch</h3>
+              <p className="mt-1 text-[11px] leading-5 text-text-secondary">
+                I&apos;m open for full-time, contract and freelance opportunities.
+              </p>
+
+              <div className="mt-5 space-y-3">
+                {contactDetails.map(({ label, value, Icon }) => (
+                  <div key={label} className="flex items-center gap-3">
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-primary/20 bg-primary/8 text-primary">
+                      <Icon size={14} aria-hidden="true" />
+                    </span>
+                    <span>
+                      <span className="block font-code text-[8px] uppercase tracking-[0.12em] text-text-muted">{label}</span>
+                      <span className="block text-[11px] font-medium text-[#B9C6D8]">{value}</span>
+                    </span>
+                  </div>
                 ))}
               </div>
+            </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-4">
-                <MagneticButton
-                  variant="primary"
-                  size="lg"
-                  href="mailto:duytv0812@gmail.com"
-                  className="w-full sm:w-auto"
+            <div className="flex flex-col justify-center gap-2.5 p-6">
+              {contactActions.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith('http') ? '_blank' : undefined}
+                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="group flex min-h-10 items-center justify-between rounded-lg border border-border bg-bg-primary/35 px-4 text-[11px] font-semibold text-text-secondary transition-all duration-200 hover:border-primary/45 hover:bg-primary/8 hover:text-text"
                 >
-                  <Mail size={18} />
-                  Gửi Email
-                </MagneticButton>
-                <MagneticButton
-                  variant="ghost"
-                  size="lg"
-                  href="#"
-                  className="w-full sm:w-auto"
-                >
-                  <FileText size={18} />
-                  Download CV
-                </MagneticButton>
-              </div>
+                  <span className="flex items-center gap-3">
+                    <Icon size={14} className="text-[#8FA4BE] transition-colors group-hover:text-primary" aria-hidden="true" />
+                    {label}
+                  </span>
+                  <Send size={11} className="text-text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+                </a>
+              ))}
             </div>
           </div>
         </RevealOnScroll>

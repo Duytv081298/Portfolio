@@ -1,81 +1,98 @@
-'use client';
-
+import { ArrowRight, Code2, Gamepad2, Globe2, MonitorSmartphone, Smartphone, Zap } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 
-const upcomingCategories = [
+const gameCategories = [
   {
     label: 'Mobile Games',
     value: 'mobile',
-    icon: '📱',
-    desc: 'Hyper Casual & Puzzle games trên iOS/Android',
-    color: '#4DA3FF',
+    icon: Smartphone,
+    decoration: Gamepad2,
+    description: 'Hyper casual and casual games built for iOS and Android.',
+    color: '#4F8EF7',
   },
   {
     label: 'Instant Platforms',
     value: 'instant',
-    icon: '⚡',
-    desc: 'Facebook Instant Games, Snapchat Games',
-    color: '#00F5A0',
+    icon: Zap,
+    decoration: Globe2,
+    description: 'Facebook Instant Games, Snapchat Games and other instant platforms.',
+    color: '#00D97E',
   },
   {
     label: 'Web Games',
     value: 'web',
-    icon: '🌐',
-    desc: 'Browser-based HTML5 games',
-    color: '#7C5CFF',
+    icon: MonitorSmartphone,
+    decoration: Code2,
+    description: 'Browser-based HTML5 games with WebGL.',
+    color: '#9B74FF',
   },
-];
+] as const;
 
 export default function FeaturedGamesSection() {
   return (
-    <section id="games" className="py-40 md:py-56 relative bg-bg-secondary/40 border-y border-border/30">
+    <section
+      id="games"
+      className="relative border-y border-border/50 bg-bg-secondary/35 py-10 md:py-12"
+    >
       <div className="section-container">
         <SectionHeader
           title="Games Portfolio"
           index="02"
-          accent="instant_games"
-          subtitle="Các game đã ship trên Mobile, Instant Platforms và Web. Case study đang được chuẩn bị."
+          accent="games_portfolio"
+          subtitle="Core game development across Mobile, Instant Platforms and Web."
+          className="mb-6"
         />
 
-        {/* Coming Soon Notice */}
-        <div className="flex items-center gap-3 mb-12 py-3 px-4 rounded-xl border border-border bg-card/50 w-full sm:w-fit">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-          <p className="text-text-muted text-sm">
-            Case study chi tiết đang được chuẩn bị — sẽ cập nhật sớm.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-5">
+          {gameCategories.map((category) => {
+            const Icon = category.icon;
+            const Decoration = category.decoration;
 
-        {/* Category Placeholders */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {upcomingCategories.map((cat) => (
-            <div
-              key={cat.value}
-              className="relative rounded-xl border p-6 flex items-center gap-5 transition-all duration-300 hover:border-opacity-50"
-              style={{ borderColor: `${cat.color}20`, backgroundColor: `${cat.color}04` }}
-            >
-              {/* Icon */}
-              <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                style={{ backgroundColor: `${cat.color}12`, border: `1px solid ${cat.color}20` }}
+            return (
+              <article
+                key={category.value}
+                className="group relative isolate flex min-h-[198px] flex-col overflow-hidden rounded-xl border bg-card/70 p-5 transition-colors duration-200 hover:bg-card focus-within:bg-card motion-reduce:transition-none sm:p-6"
+                style={{
+                  borderColor: `${category.color}80`,
+                  backgroundImage: `linear-gradient(135deg, ${category.color}09 0%, transparent 62%)`,
+                  boxShadow: `inset 0 0 0 1px ${category.color}08`,
+                }}
               >
-                {cat.icon}
-              </div>
+                <div className="relative z-10 flex items-center gap-3">
+                  <Icon
+                    className="size-7 shrink-0"
+                    strokeWidth={1.8}
+                    style={{ color: category.color }}
+                    aria-hidden="true"
+                  />
+                  <h3 className="font-display text-lg font-semibold text-text">{category.label}</h3>
+                </div>
 
-              {/* Info */}
-              <div className="flex-1 min-w-0">
-                <p className="font-display font-bold text-text text-sm mb-0.5">{cat.label}</p>
-                <p className="text-text-muted text-xs leading-relaxed">{cat.desc}</p>
-              </div>
+                <p className="relative z-10 mt-3 max-w-[19rem] text-[13px] leading-5 text-text-secondary">
+                  {category.description}
+                </p>
 
-              {/* Coming Soon badge */}
-              <span
-                className="flex-shrink-0 px-2 py-0.5 rounded text-[9px] font-code font-bold uppercase tracking-wider border"
-                style={{ color: cat.color, borderColor: `${cat.color}30`, backgroundColor: `${cat.color}08` }}
-              >
-                Soon
-              </span>
-            </div>
-          ))}
+                <div className="relative z-10 mt-auto pt-4">
+                  <a
+                    href="#playable"
+                    className="inline-flex min-h-9 items-center gap-2 rounded-md border px-3 py-1.5 font-code text-[11px] font-semibold transition-colors duration-200 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary motion-reduce:transition-none"
+                    style={{ color: category.color, borderColor: `${category.color}85` }}
+                    aria-label={`View ${category.label} projects`}
+                  >
+                    View Projects
+                    <ArrowRight className="size-3.5" strokeWidth={1.8} aria-hidden="true" />
+                  </a>
+                </div>
+
+                <Decoration
+                  className="pointer-events-none absolute -bottom-2 right-3 size-20 opacity-35 transition-opacity duration-200 group-hover:opacity-55 motion-reduce:transition-none sm:size-24"
+                  strokeWidth={0.8}
+                  style={{ color: category.color }}
+                  aria-hidden="true"
+                />
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

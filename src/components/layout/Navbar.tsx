@@ -1,138 +1,98 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Gamepad2, Mail } from 'lucide-react';
-import { GithubIcon, FacebookIcon } from '@/components/ui/BrandIcons';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { Gamepad2, Mail, Menu, X } from 'lucide-react';
+import { FacebookIcon, GithubIcon } from '@/components/ui/BrandIcons';
 
 const navItems = [
   { label: 'Home', href: '#hero' },
   { label: 'Playable Ads', href: '#playable' },
   { label: 'Games', href: '#games' },
-  { label: 'Tech', href: '#tech' },
+  { label: 'Tech Stack', href: '#tech' },
   { label: 'Journey', href: '#career' },
   { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
-  const [visible, setVisible] = useState(true);
-  const isNavigatingRef = useRef(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    let prevScrollY = window.scrollY;
-
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      setScrolled(window.scrollY > 24);
 
-      // Hide navbar when scrolling down, show when scrolling up
-      if (isNavigatingRef.current) {
-        // Do not update visibility during programmatic scrolling
-      } else if (currentScrollY > prevScrollY && currentScrollY > 100) {
-        setVisible(false);
-      } else {
-        setVisible(true);
-      }
-
-      prevScrollY = currentScrollY;
-      setScrolled(currentScrollY > 50);
-
-      // Detect active section
-      const sections = navItems.map((item) => item.href.slice(1));
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(sections[i]);
-            break;
-          }
+      for (let index = navItems.length - 1; index >= 0; index -= 1) {
+        const id = navItems[index].href.slice(1);
+        const section = document.getElementById(id);
+        if (section && section.getBoundingClientRect().top <= 140) {
+          setActiveSection(id);
+          return;
         }
       }
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavClick = (href: string) => {
+  const navigateTo = (href: string) => {
     setMobileOpen(false);
-    setVisible(true); // Ensure navbar stays visible
-    isNavigatingRef.current = true;
-
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      isNavigatingRef.current = false;
-    }, 1000); // Wait for smooth scroll animation to finish
-
-    const el = document.getElementById(href.slice(1));
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    document.getElementById(href.slice(1))?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   return (
     <>
-      <motion.nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'glass-strong py-3 border-b border-border/50 shadow-[0_4px_30px_rgba(0,0,0,0.5)]' : 'py-5 border-b border-transparent'
+      <nav
+        aria-label="Primary navigation"
+        className={`fixed inset-x-0 top-0 z-50 h-[82px] border-b transition-all duration-300 ${
+          scrolled
+            ? 'border-border/90 bg-bg-primary/95 shadow-[0_8px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl'
+            : 'border-border/60 bg-bg-primary/88 backdrop-blur-md'
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: visible ? 0 : -100 }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-10 flex items-center justify-between">
-          {/* Logo */}
+        <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 md:px-10">
           <a
             href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              handleNavClick('#hero');
+            onClick={(event) => {
+              event.preventDefault();
+              navigateTo('#hero');
             }}
-            className="flex items-center gap-3 group"
+            className="group flex min-h-11 items-center gap-3 rounded-lg"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/10 to-purple/10 border border-primary/20 flex items-center justify-center group-hover:from-primary/20 group-hover:to-purple/20 group-hover:border-primary/50 transition-all duration-300 shadow-[0_0_15px_rgba(77,163,255,0.05)]">
-              <Gamepad2 size={20} className="text-primary group-hover:scale-110 transition-transform duration-300" />
-            </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="font-display font-bold text-text text-sm tracking-widest group-hover:text-primary transition-colors">
-                DUY<span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">.DEV</span>
+            <span className="grid h-11 w-11 place-items-center rounded-full border border-primary/25 bg-gradient-to-br from-primary/12 to-purple/10 shadow-[inset_0_0_18px_rgba(62,166,255,0.06)]">
+              <Gamepad2 size={22} className="text-primary transition-transform duration-200 group-hover:scale-105" aria-hidden="true" />
+            </span>
+            <span className="hidden flex-col sm:flex">
+              <span className="font-display text-sm font-bold uppercase leading-tight tracking-[0.08em] text-text">
+                Duy <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Dev</span>
               </span>
-              <span className="font-code text-[9px] text-text-muted uppercase tracking-wider">
-                Game Dev
-              </span>
-            </div>
+              <span className="font-code text-[8px] uppercase tracking-[0.15em] text-text-muted">Game Developer</span>
+            </span>
           </a>
 
-          {/* Desktop Nav - Clean Landing Page style */}
-          <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+          <div className="hidden items-center gap-8 lg:flex xl:gap-10">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
                 <button
                   key={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`
-                    relative py-1 text-xs font-mono font-semibold tracking-wider uppercase transition-colors duration-300
-                    ${
-                      isActive
-                        ? 'text-primary'
-                        : 'text-text-secondary hover:text-text'
-                    }
-                  `}
+                  type="button"
+                  onClick={() => navigateTo(item.href)}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`relative min-h-11 cursor-pointer px-1 font-code text-[10px] font-semibold uppercase tracking-[0.08em] transition-colors ${
+                    isActive ? 'text-primary' : 'text-text-secondary hover:text-text'
+                  }`}
                 >
-                  <span>{item.label}</span>
+                  {item.label}
                   {isActive && (
-                    <motion.div
-                      layoutId="nav-underline"
-                      className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-accent rounded-full shadow-[0_0_8px_rgba(77,163,255,0.5)]"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    <motion.span
+                      layoutId="nav-active"
+                      className="absolute bottom-[5px] left-0 right-0 h-[2px] rounded-full bg-gradient-to-r from-primary to-accent shadow-[0_0_8px_rgba(0,217,126,0.35)]"
+                      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
                     />
                   )}
                 </button>
@@ -140,14 +100,14 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Social + Mobile Toggle */}
-          <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-1">
+          <div className="flex items-center gap-1">
+            <div className="hidden items-center md:flex">
               <a
                 href="https://github.com/Duytv081298"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200"
+                aria-label="GitHub"
+                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
               >
                 <GithubIcon size={16} />
               </a>
@@ -155,92 +115,64 @@ export default function Navbar() {
                 href="https://web.facebook.com/Duytv98"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200"
+                aria-label="Facebook"
+                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
               >
                 <FacebookIcon size={16} />
               </a>
               <a
                 href="mailto:duytv0812@gmail.com"
-                className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200"
+                aria-label="Email"
+                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
               >
-                <Mail size={16} />
+                <Mail size={16} aria-hidden="true" />
               </a>
             </div>
 
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all"
+              type="button"
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              aria-expanded={mobileOpen}
+              className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text lg:hidden"
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileOpen ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 lg:hidden"
-            initial={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-bg-primary/80 px-4 pt-[94px] backdrop-blur-sm lg:hidden"
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setMobileOpen(false)}
           >
-            <div
-              className="absolute inset-0 bg-bg-primary/80 backdrop-blur-sm"
-              onClick={() => setMobileOpen(false)}
-            />
             <motion.div
-              className="absolute top-16 left-4 right-4 glass-strong rounded-2xl p-4 overflow-hidden"
-              initial={{ opacity: 0, y: -20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+              className="glass-strong mx-auto max-w-lg rounded-2xl p-3"
+              initial={reduceMotion ? false : { opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              onClick={(event) => event.stopPropagation()}
             >
-              {navItems.map((item, i) => (
-                <motion.button
-                  key={item.href}
-                  onClick={() => handleNavClick(item.href)}
-                  className={`
-                    w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all
-                    ${
-                      activeSection === item.href.slice(1)
-                        ? 'text-primary bg-primary/10'
-                        : 'text-text-secondary hover:text-text hover:bg-card'
-                    }
-                  `}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  {item.label}
-                </motion.button>
-              ))}
-
-              <div className="mt-3 pt-3 border-t border-border flex items-center gap-2 px-4">
-                <a
-                  href="https://github.com/Duytv081298"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all"
-                >
-                  <GithubIcon size={18} />
-                </a>
-                <a
-                  href="https://web.facebook.com/Duytv98"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all"
-                >
-                  <FacebookIcon size={18} />
-                </a>
-                <a
-                  href="mailto:duytv0812@gmail.com"
-                  className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all"
-                >
-                  <Mail size={18} />
-                </a>
-              </div>
+              {navItems.map((item) => {
+                const isActive = activeSection === item.href.slice(1);
+                return (
+                  <button
+                    key={item.href}
+                    type="button"
+                    onClick={() => navigateTo(item.href)}
+                    className={`min-h-12 w-full rounded-xl px-4 text-left text-sm font-medium transition-colors ${
+                      isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:bg-card hover:text-text'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
             </motion.div>
           </motion.div>
         )}

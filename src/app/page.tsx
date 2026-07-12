@@ -8,11 +8,11 @@ import HeroSection from '@/components/sections/HeroSection';
 import PlayableAdsSection from '@/components/sections/PlayableAdsSection';
 import FeaturedGamesSection from '@/components/sections/FeaturedGamesSection';
 import TechStackSection from '@/components/sections/TechStackSection';
+import PerformanceSection from '@/components/sections/PerformanceSection';
 import TimelineSection from '@/components/sections/TimelineSection';
 import ContactSection from '@/components/sections/ContactSection';
 import GridBackground from '@/components/effects/GridBackground';
 import MouseSpotlight from '@/components/effects/MouseSpotlight';
-import ScrollSnapController from '@/components/effects/ScrollSnapController';
 
 // Dynamic import for Three.js (client-only, no SSR)
 const ParticleField = dynamic(
@@ -29,7 +29,6 @@ export default function Home() {
       <GridBackground />
       <ParticleField />
       <MouseSpotlight />
-      <ScrollSnapController />
 
       {/* Navigation */}
       <Navbar />
@@ -40,6 +39,7 @@ export default function Home() {
         <PlayableAdsSection />
         <FeaturedGamesSection />
         <TechStackSection />
+        <PerformanceSection />
         <TimelineSection />
         <ContactSection />
       </main>

@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Play, X, Maximize2, Minimize2 } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronUp,
+  Maximize2,
+  Minimize2,
+  Play,
+  RotateCw,
+  X,
+} from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import { playableAds, playableCategories, getPlayablesByCategory, type PlayableAd } from '@/data/playableAds';
@@ -62,10 +70,14 @@ const getCategorySvg = (category: string) => {
   }
 };
 
+const INITIAL_VISIBLE_ADS = 25;
+
 export default function PlayableAdsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [showAllAds, setShowAllAds] = useState(false);
   const [activeAd, setActiveAd] = useState<PlayableAd | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(false);
   const [activeTab, setActiveTab] = useState<'info' | 'config'>('info');
   const [activeBuildIndex, setActiveBuildIndex] = useState<number>(0);
   const [configSpeed, setConfigSpeed] = useState('1.0');
@@ -78,6 +90,7 @@ export default function PlayableAdsSection() {
   const openPlayer = (ad: PlayableAd) => {
     setActiveAd(ad);
     setIsFullscreen(false);
+    setIsLandscape(false);
     setActiveTab('info');
     setActiveBuildIndex(0);
     setConfigSpeed('1.0');
@@ -99,6 +112,7 @@ export default function PlayableAdsSection() {
       if (ad) {
         // 1. Ensure we see all games first (so the card is in the DOM)
         setActiveFilter('all');
+        setShowAllAds(true);
 
         // 2. Scroll to the specific card centered in the viewport
         setTimeout(() => {
@@ -135,6 +149,10 @@ export default function PlayableAdsSection() {
   };
 
   const filteredAds = getPlayablesByCategory(activeFilter);
+  const visibleAds =
+    activeFilter === 'all' && !showAllAds
+      ? filteredAds.slice(0, INITIAL_VISIBLE_ADS)
+      : filteredAds;
 
   const handlePrevAd = () => {
     if (!activeAd) return;
@@ -149,64 +167,65 @@ export default function PlayableAdsSection() {
     const nextIndex = (currentIndex + 1) % playableAds.length;
     openPlayer(playableAds[nextIndex]);
   };
-   
+
   const closePlayer = () => {
     setActiveAd(null);
     setIsFullscreen(false);
   };
 
   return (
-    <section id="playable" className="py-40 md:py-56 relative">
+    <section id="playable" className="relative py-10 md:py-12">
       <div className="section-container">
-        {/* Header Block - Side by side on larger screens */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-12 mb-12">
+        {/* Compact header: copy on the left, metrics on the right. */}
+        <div className="mb-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <SectionHeader
             accent="playable_ads"
             index="01"
             title="Playable Ads"
             subtitle={`${playableAds.length} playable ads shipped. Click "Play" to try them directly in your browser.`}
-            className="mb-0 md:max-w-[65%]"
+            className="mb-0 min-w-0 flex-1 lg:max-w-xl [&>div:first-child]:!mb-2 [&>div:last-child]:!mt-3 [&>div:last-child]:!h-0.5 [&>div:last-child]:!w-12 [&_h2]:!text-3xl [&_p]:!mt-2 [&_p]:!text-sm [&_p]:!leading-relaxed"
           />
 
-          {/* Stats Bar */}
-          <RevealOnScroll className="flex-shrink-0 md:mb-1">
-            <div className="flex flex-wrap items-center justify-between sm:justify-start gap-4 sm:gap-6 py-4 px-4 sm:px-5 rounded-xl bg-card/50 border border-border/50 w-full sm:w-fit shadow-lg shadow-black/5">
-              <div className="flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start min-w-[90px] sm:min-w-0">
-                <span className="font-code text-xl sm:text-2xl font-bold text-primary">{playableAds.length}</span>
-                <span className="text-text-secondary text-xs sm:text-sm whitespace-nowrap">Total Games</span>
+          <RevealOnScroll className="w-full shrink-0 lg:w-auto lg:pb-0.5">
+            <div className="grid w-full grid-cols-3 lg:min-w-[390px]" aria-label="Playable ads statistics">
+              <div className="flex min-w-0 flex-col px-3 sm:px-5 lg:pl-0">
+                <span className="font-code text-lg font-bold leading-none text-primary sm:text-xl">
+                  {playableAds.length}+
+                </span>
+                <span className="mt-1 text-[10px] text-text-secondary sm:text-xs">Total Games</span>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-border" />
-              <div className="flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start min-w-[90px] sm:min-w-0">
-                <span className="font-code text-xl sm:text-2xl font-bold text-accent">{'<5MB'}</span>
-                <span className="text-text-secondary text-xs sm:text-sm whitespace-nowrap">Each</span>
+              <div className="flex min-w-0 flex-col border-l border-border/70 px-3 sm:px-5">
+                <span className="font-code text-lg font-bold leading-none text-accent sm:text-xl">{'<5MB'}</span>
+                <span className="mt-1 text-[10px] text-text-secondary sm:text-xs">Each</span>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-border" />
-              <div className="flex items-center gap-2 flex-1 sm:flex-none justify-center sm:justify-start min-w-[90px] sm:min-w-0">
-                <span className="font-code text-xl sm:text-2xl font-bold text-purple">Playable</span>
-                <span className="text-text-secondary text-xs sm:text-sm whitespace-nowrap">Play</span>
+              <div className="flex min-w-0 flex-col border-l border-border/70 px-3 sm:px-5 lg:pr-0">
+                <span className="font-code text-lg font-bold leading-none text-purple sm:text-xl">Playable</span>
+                <span className="mt-1 text-[10px] text-text-secondary sm:text-xs">In Browser</span>
               </div>
             </div>
           </RevealOnScroll>
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex items-center gap-2 mb-12 overflow-x-auto scrollbar-none pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+        <div
+          className="scrollbar-none -mx-4 mb-5 flex items-center gap-1.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+          role="group"
+          aria-label="Filter playable ads by category"
+        >
           {playableCategories.map((cat) => (
             <button
+              type="button"
               key={cat.value}
               onClick={() => setActiveFilter(cat.value)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+              aria-label={`Show ${cat.label} playable ads`}
+              aria-pressed={activeFilter === cat.value}
+              className={`whitespace-nowrap rounded-md border px-3 py-1.5 text-[11px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary ${
                 activeFilter === cat.value
                   ? 'text-primary bg-primary/10 border border-primary/30'
-                  : 'text-text-secondary hover:text-text bg-card border border-border hover:border-border-hover'
+                  : 'border-border/70 bg-card/60 text-text-secondary hover:border-border-hover hover:text-text'
               }`}
             >
               {cat.label}
-              {cat.value !== 'all' && (
-                <span className="ml-1.5 text-xs text-text-muted">
-                  ({playableAds.filter(a => a.category === cat.value).length})
-                </span>
-              )}
             </button>
           ))}
         </div>
@@ -214,20 +233,22 @@ export default function PlayableAdsSection() {
         {/* Grid */}
         <AnimatePresence mode="wait">
           <motion.div
+            id="playable-ads-grid"
             key={activeFilter}
-            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"
+            className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 lg:grid-cols-5 lg:gap-[18px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            {filteredAds.map((ad, index) => {
+            {visibleAds.map((ad, index) => {
               const isHighlighted = highlightedAdId === ad.id;
               return (
-                <motion.div
+                <motion.button
+                  type="button"
                   key={ad.id}
                   id={`playable-ad-${ad.slug}`}
-                  className="group relative cursor-pointer"
+                  className="group relative block w-full appearance-none rounded-xl bg-transparent p-0 text-inherit focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary"
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
@@ -237,100 +258,95 @@ export default function PlayableAdsSection() {
                     y: -10,
                   } : { scale: 1, y: 0 }}
                   onClick={() => openPlayer(ad)}
+                  aria-label={`Play ${ad.title}`}
                 >
                   {/* Card */}
                   <div
-                    className={`relative aspect-[9/14] rounded-2xl overflow-hidden border transition-all duration-500 bg-[#0e1118] flex flex-col items-center justify-between p-4 pb-14 shadow-lg group ${
+                    className={`glass-premium relative flex aspect-square w-full flex-col items-center justify-center overflow-hidden rounded-xl border p-3 transition-all duration-300 ${
                       isHighlighted
                         ? 'border-primary shadow-[0_0_35px_rgba(79,142,247,0.7)] z-30'
-                        : 'border-border/60 hover:border-primary/50 hover:shadow-primary/5'
+                        : 'border-border/50 group-hover:-translate-y-0.5 group-hover:border-primary/45 group-hover:shadow-[0_10px_28px_rgba(79,142,247,0.09)]'
                     }`}
                   >
                     {isHighlighted && (
-                      <div className="absolute inset-0 rounded-2xl border-2 border-primary animate-pulse pointer-events-none z-20" />
+                      <div className="pointer-events-none absolute inset-0 z-20 animate-pulse rounded-xl border-2 border-primary" />
                     )}
-                  {/* Blurred Icon Background for a dynamic matching glow */}
-                  {ad.icon ? (
-                    <img
-                      src={ad.icon}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover filter blur-xl opacity-20 scale-125 transition-transform duration-700 group-hover:scale-135 pointer-events-none"
-                    />
-                  ) : (
+                    {/* Blurred icon and color wash keep each card tied to its game art. */}
+                    {ad.icon ? (
+                      <img
+                        src={ad.icon}
+                        alt=""
+                        className="pointer-events-none absolute inset-0 h-full w-full scale-125 object-cover opacity-[0.14] blur-2xl transition-transform duration-500 group-hover:scale-[1.35]"
+                      />
+                    ) : null}
                     <div
-                      className="absolute inset-0 opacity-20 transition-transform duration-700 group-hover:scale-110 pointer-events-none"
+                      className="pointer-events-none absolute inset-0 opacity-[0.16] transition-opacity duration-300 group-hover:opacity-[0.22]"
                       style={{
-                        background: `linear-gradient(160deg, ${ad.coverColor}, ${ad.coverColorSecondary})`,
+                        background: `linear-gradient(145deg, ${ad.coverColor}, ${ad.coverColorSecondary})`,
                       }}
                     />
-                  )}
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.025] via-transparent to-bg-primary/20" />
 
-                  {/* Cover Gradient Overlay */}
-                  <div
-                    className="absolute inset-0 opacity-10 transition-transform duration-500 group-hover:scale-105 pointer-events-none"
-                    style={{
-                      background: `linear-gradient(160deg, ${ad.coverColor}, ${ad.coverColorSecondary})`,
-                    }}
-                  />
-
-                  {/* Centered Content Container */}
-                  <div className="flex-1 flex flex-col items-center justify-center mt-6 w-full z-10">
-                    {/* App Icon Container */}
-                    <div className="relative w-22 h-22 sm:w-24 sm:h-24 transition-all duration-300 group-hover:scale-105 group-hover:-translate-y-1">
-                      {ad.icon ? (
-                        <img
-                          src={ad.icon}
-                          alt={`${ad.title} icon`}
-                          className="w-full h-full rounded-[22%] object-cover border border-white/10 shadow-lg shadow-black/50 group-hover:shadow-primary/20 transition-all duration-300"
-                        />
-                      ) : (
-                        <div
-                          className="w-full h-full rounded-[22%] border border-white/15 flex flex-col items-center justify-center shadow-lg shadow-black/50 p-2 relative overflow-hidden"
-                          style={{
-                            background: `linear-gradient(135deg, ${ad.coverColor}, ${ad.coverColorSecondary})`,
-                          }}
-                        >
-                          {/* Inner soft glow */}
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)] pointer-events-none" />
-                          
-                          {/* Category SVG */}
-                          <div className="z-10 transition-transform duration-300 group-hover:scale-110">
-                            {getCategorySvg(ad.category)}
+                    <div className="relative z-10 flex w-full flex-col items-center justify-center">
+                      <div className="relative h-14 w-14 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:scale-105 sm:h-16 sm:w-16 lg:h-[68px] lg:w-[68px]">
+                        {ad.icon ? (
+                          <img
+                            src={ad.icon}
+                            alt={`${ad.title} icon`}
+                            className="h-full w-full rounded-[22%] border border-white/15 object-cover shadow-[0_8px_18px_rgba(0,0,0,0.4)]"
+                          />
+                        ) : (
+                          <div
+                            className="relative flex h-full w-full flex-col items-center justify-center overflow-hidden rounded-[22%] border border-white/15 p-2 shadow-[0_8px_18px_rgba(0,0,0,0.4)]"
+                            style={{
+                              background: `linear-gradient(135deg, ${ad.coverColor}, ${ad.coverColorSecondary})`,
+                            }}
+                          >
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)]" />
+                            <div className="z-10 transition-transform duration-300 group-hover:scale-110">
+                              {getCategorySvg(ad.category)}
+                            </div>
+                            <span className="absolute bottom-1 z-10 select-none rounded border border-white/5 bg-black/35 px-1 py-0.5 font-code text-[7px] font-bold uppercase tracking-wider text-white/80 backdrop-blur-[2px]">
+                              {ad.title.slice(0, 3)}
+                            </span>
                           </div>
+                        )}
 
-                          {/* Short title badge inside the icon */}
-                          <span className="absolute bottom-1.5 text-[8px] font-code font-bold text-white/80 uppercase tracking-wider bg-black/35 px-1.5 py-0.5 rounded backdrop-blur-[2px] z-10 border border-white/5 select-none">
-                            {ad.title.slice(0, 3)}
+                        <div className="absolute inset-0 flex items-center justify-center rounded-[22%] bg-black/45 opacity-0 backdrop-blur-[1px] transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100">
+                          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/50 bg-primary/20">
+                            <Play size={13} className="ml-0.5 text-primary" fill="currentColor" />
                           </span>
                         </div>
-                      )}
-
-                      {/* Play Overlay (Sleek Glassmorphic overlay directly on the app icon) */}
-                      <div className="absolute inset-0 bg-black/45 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center rounded-[22%] backdrop-blur-[1px]">
-                        <div className="w-10 h-10 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center">
-                          <Play size={16} className="text-primary ml-0.5" fill="currentColor" />
-                        </div>
                       </div>
+
+                      <span className="mt-3 line-clamp-1 max-w-full px-1 text-center font-display text-xs font-bold leading-tight text-white/95 transition-colors duration-200 group-hover:text-primary sm:text-[13px]">
+                        {ad.title}
+                      </span>
+                      <span className="mt-2 inline-flex rounded-full border border-white/10 bg-white/[0.045] px-2 py-0.5 font-code text-[8px] capitalize leading-none text-text-secondary backdrop-blur-md transition-colors duration-200 group-hover:border-primary/20 group-hover:text-text">
+                        {ad.category.replace('-', ' ')}
+                      </span>
                     </div>
-
-                    {/* Game Title */}
-                    <span className="text-white/90 font-display font-bold text-xs sm:text-sm text-center drop-shadow-md leading-tight mt-4 px-2 group-hover:text-primary transition-colors duration-300 line-clamp-2">
-                      {ad.title}
-                    </span>
                   </div>
-
-                  {/* Category Badge */}
-                  <div className="absolute bottom-3 left-3 right-3 text-center z-10">
-                    <span className="inline-block px-2.5 py-0.5 rounded-full text-[9px] font-code bg-white/5 backdrop-blur-md border border-white/10 text-text-secondary capitalize group-hover:border-primary/20 group-hover:text-text transition-all">
-                      {ad.category.replace('-', ' ')}
-                    </span>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                </motion.button>
+              );
+            })}
+          </motion.div>
         </AnimatePresence>
+
+        {activeFilter === 'all' && filteredAds.length > INITIAL_VISIBLE_ADS && (
+          <div className="mt-5 flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllAds((current) => !current)}
+              aria-controls="playable-ads-grid"
+              aria-expanded={showAllAds}
+              className="inline-flex items-center gap-2 rounded-lg border border-primary/35 bg-bg-primary/30 px-4 py-2 font-code text-[11px] font-medium text-primary transition-colors duration-200 hover:border-primary/60 hover:bg-primary/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-primary"
+            >
+              {showAllAds ? 'Show Fewer Playable Ads' : 'View More Playable Ads'}
+              {showAllAds ? <ChevronUp size={14} aria-hidden="true" /> : <ChevronDown size={14} aria-hidden="true" />}
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Player Modal */}
@@ -353,7 +369,9 @@ export default function PlayableAdsSection() {
               className={`relative z-10 flex flex-col md:flex-row items-stretch bg-[#141720] border border-border/80 overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] ${
                 isFullscreen
                   ? 'w-full h-full rounded-none'
-                  : 'w-full h-[85vh] md:w-[840px] md:h-[620px] rounded-2xl'
+                  : isLandscape
+                    ? 'w-full h-[85vh] md:w-[980px] md:h-[620px] rounded-2xl'
+                    : 'w-full h-[85vh] md:w-[840px] md:h-[620px] rounded-2xl'
               } transition-all duration-300`}
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -361,26 +379,62 @@ export default function PlayableAdsSection() {
               transition={{ type: 'spring', stiffness: 350, damping: 28 }}
             >
               {/* Game Simulator Column */}
-              <div className={`relative flex flex-col justify-center items-center bg-black ${
-                isFullscreen 
-                  ? 'w-full h-full' 
-                  : 'w-full md:w-[350px] h-[55%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30'
-              }`}>
-                {/* Embedded Game Iframe */}
-                <div className="w-full h-full relative overflow-hidden">
-                  <iframe
-                    key={activeBuildIndex} // Force reload of iframe when version changes
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
-                      activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
-                        ? activeAd.demoBuilds[activeBuildIndex].publicPath
-                        : activeAd.publicPath
-                    }`}
-                    className="w-full h-full border-0"
-                    sandbox="allow-scripts allow-same-origin"
-                    title={`Play ${activeAd.title}`}
-                    allow="autoplay"
-                  />
-                </div>
+              <div className={`relative flex flex-col justify-center items-center bg-[#07090e] p-4 md:p-8 ${
+                isFullscreen
+                  ? 'w-full h-full p-0'
+                  : isLandscape
+                    ? 'w-full md:w-[490px] h-[50%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30'
+                    : 'w-full md:w-[350px] h-[55%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30'
+              } transition-all duration-300`}>
+                {isFullscreen ? (
+                  /* Fullscreen Iframe */
+                  <div className="w-full h-full relative overflow-hidden">
+                    <iframe
+                      key={activeBuildIndex}
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
+                        activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
+                          ? activeAd.demoBuilds[activeBuildIndex].publicPath
+                          : activeAd.publicPath
+                      }`}
+                      className="w-full h-full border-0"
+                      sandbox="allow-scripts allow-same-origin"
+                      title={`Play ${activeAd.title}`}
+                      allow="autoplay"
+                    />
+                  </div>
+                ) : (
+                  /* Device Mockup Wrapper */
+                  <div className={`relative transition-all duration-500 ease-out border-[8px] border-[#222736] bg-[#0c0f18] shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex items-center justify-center ${
+                    isLandscape
+                      ? 'w-[426px] h-[240px] rounded-[24px]'
+                      : 'w-[250px] h-[444px] rounded-[36px]'
+                  }`}>
+                    {/* Speaker Notch */}
+                    {!isLandscape && (
+                      <div className="absolute top-[8px] left-1/2 -translate-x-1/2 w-12 h-3.5 bg-[#222736] rounded-full z-20 flex items-center justify-center">
+                        <div className="w-6 h-[2px] bg-white/20 rounded-full" />
+                      </div>
+                    )}
+
+                    {/* Screen wrapper to apply round corners inside the borders */}
+                    <div className={`w-full h-full overflow-hidden bg-black ${
+                      isLandscape ? 'rounded-[14px]' : 'rounded-[26px]'
+                    }`}>
+                      <iframe
+                        key={activeBuildIndex}
+                        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
+                          activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
+                            ? activeAd.demoBuilds[activeBuildIndex].publicPath
+                            : activeAd.publicPath
+                        }`}
+                        className="w-full h-full border-0"
+                        sandbox="allow-scripts allow-same-origin"
+                        title={`Play ${activeAd.title}`}
+                        allow="autoplay"
+                      />
+                    </div>
+                  </div>
+                )}
 
                 {/* Overlaid controls when in Fullscreen */}
                 {isFullscreen && (
@@ -406,7 +460,7 @@ export default function PlayableAdsSection() {
               {/* Info & Config Column (Only show when not fullscreen) */}
               {!isFullscreen && (
                 <div
-                  className="flex-1 flex flex-col justify-between p-6 md:p-8 overflow-y-auto h-[45%] md:h-full border-t md:border-t-0 border-border/30"
+                  className="flex-1 flex flex-col justify-between p-6 md:p-8 overflow-y-auto h-[50%] md:h-full border-t md:border-t-0 border-border/30"
                   style={{
                     backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)',
                     backgroundSize: '24px 24px',
@@ -437,6 +491,17 @@ export default function PlayableAdsSection() {
                         Next →
                       </button>
                       <div className="w-[1px] h-4 bg-border/40 mx-1" />
+                      <button
+                        onClick={() => setIsLandscape(!isLandscape)}
+                        className={`p-2 rounded-lg border transition-all ${
+                          isLandscape
+                            ? 'text-accent bg-accent/10 border-accent/30'
+                            : 'text-text-secondary hover:text-text hover:bg-bg-secondary border-border/50'
+                        }`}
+                        title="Rotate Simulator"
+                      >
+                        <RotateCw size={13} className={isLandscape ? 'rotate-90 transition-transform duration-300' : 'transition-transform duration-300'} />
+                      </button>
                       <button
                         onClick={() => setIsFullscreen(true)}
                         className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-bg-secondary border border-border/50 transition-all"

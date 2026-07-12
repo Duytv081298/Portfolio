@@ -1,84 +1,39 @@
 'use client';
 
-import { Gamepad2, Mail, ArrowUp } from 'lucide-react';
-import { GithubIcon, FacebookIcon } from '@/components/ui/BrandIcons';
+import { ArrowUp, Gamepad2 } from 'lucide-react';
+import { useReducedMotion } from 'motion/react';
 
 export default function Footer() {
+  const reduceMotion = useReducedMotion();
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   return (
-    <footer className="relative border-t border-border bg-bg-secondary">
-      {/* Neon top line */}
-      <div className="neon-line" />
-
-      <div className="section-container py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          {/* Logo & Info */}
-          <div className="flex flex-col items-center md:items-start gap-3">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center">
-                <Gamepad2 size={16} className="text-primary" />
-              </div>
-              <span className="font-display font-semibold text-text text-sm">
-                DUY.DEV<span className="text-primary">.</span>
-              </span>
-            </div>
-            <p className="text-text-secondary text-sm">
-              Senior Game Developer · Playable Ads Specialist
-            </p>
-          </div>
-
-          {/* Links */}
-          <div className="flex items-center gap-4">
-            <a
-              href="https://github.com/Duytv081298"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200 text-sm"
-            >
-              <GithubIcon size={16} />
-              <span className="hidden sm:inline">GitHub</span>
-            </a>
-            <a
-              href="https://web.facebook.com/Duytv98"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200 text-sm"
-            >
-              <FacebookIcon size={16} />
-              <span className="hidden sm:inline">Facebook</span>
-            </a>
-            <a
-              href="mailto:duytv0812@gmail.com"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-text-secondary hover:text-text hover:bg-card transition-all duration-200 text-sm"
-            >
-              <Mail size={16} />
-              <span className="hidden sm:inline">Email</span>
-            </a>
-          </div>
-
-          {/* Scroll to top */}
-          <button
-            onClick={scrollToTop}
-            className="p-3 rounded-xl border border-border hover:border-primary/50 hover:bg-primary/5 text-text-secondary hover:text-primary transition-all duration-300 group"
-            aria-label="Scroll to top"
-          >
-            <ArrowUp
-              size={18}
-              className="group-hover:-translate-y-0.5 transition-transform duration-300"
-            />
-          </button>
+    <footer className="relative border-t border-border/70 bg-bg-primary">
+      <div className="section-container flex min-h-[76px] flex-col items-center justify-between gap-3 py-4 sm:flex-row">
+        <div className="flex items-center gap-2.5">
+          <span className="grid h-7 w-7 place-items-center rounded-full border border-primary/25 bg-primary/10">
+            <Gamepad2 size={14} className="text-primary" aria-hidden="true" />
+          </span>
+          <span className="font-display text-[10px] font-bold uppercase tracking-[0.08em] text-text">
+            Duy <span className="text-primary">Dev</span>
+          </span>
         </div>
 
-        {/* Copyright */}
-        <div className="mt-8 pt-6 border-t border-border/50 text-center">
-          <p className="text-text-muted text-xs font-code">
-            © {new Date().getFullYear()} Trịnh Văn Duy. Built with Next.js · Designed
-            like a Game Launcher.
-          </p>
-        </div>
+        <p className="font-code text-[8px] text-text-muted">
+          © {new Date().getFullYear()} Trịnh Văn Duy. Built with <span className="text-[#E15B64]">♥</span> and lots of ☕
+        </p>
+
+        <button
+          type="button"
+          onClick={scrollToTop}
+          className="flex min-h-10 items-center gap-2 rounded-lg px-3 font-code text-[8px] uppercase tracking-[0.08em] text-text-muted transition-colors hover:bg-card hover:text-primary"
+          aria-label="Back to top"
+        >
+          Back to top <ArrowUp size={11} aria-hidden="true" />
+        </button>
       </div>
     </footer>
   );

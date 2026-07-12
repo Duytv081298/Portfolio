@@ -1,15 +1,12 @@
-'use client';
-
 import { type ReactNode } from 'react';
-import RevealOnScroll from './RevealOnScroll';
 
 interface SectionHeaderProps {
-  title: string;
+  title: ReactNode;
   subtitle?: string;
   accent?: string;
   icon?: ReactNode;
   align?: 'left' | 'center';
-  index?: string; // e.g. "01", "02"
+  index?: string;
   className?: string;
 }
 
@@ -20,49 +17,46 @@ export default function SectionHeader({
   icon,
   align = 'left',
   index,
-  className = '',
+  className,
 }: SectionHeaderProps) {
   const isCenter = align === 'center';
+  const accentLabel = accent?.replace(/_/g, ' ');
 
   return (
-    <RevealOnScroll className={`${className || 'mb-16'} ${isCenter ? 'text-center' : ''}`}>
-      {/* Top row: section index + accent label */}
-      <div className={`flex items-center gap-4 mb-4 ${isCenter ? 'justify-center' : ''}`}>
-        {index && (
-          <span className="font-code text-[11px] font-bold text-text-muted tracking-widest select-none">
-            {index}
-          </span>
-        )}
-        {index && <div className="w-px h-3 bg-border-hover" />}
-        {accent && (
-          <span className="font-code text-[11px] text-primary tracking-widest uppercase font-semibold">
-            {accent}
-          </span>
-        )}
-      </div>
+    <header
+      className={`${className ?? 'mb-7'} ${isCenter ? 'text-center' : 'text-left'}`}
+      data-section-index={index}
+    >
+      {accentLabel && (
+        <p
+          className={`mb-1.5 font-code text-[10px] font-bold uppercase tracking-[0.14em] text-primary ${
+            isCenter ? 'mx-auto' : ''
+          }`}
+        >
+          {accentLabel}
+        </p>
+      )}
 
-      {/* Main title */}
       <div className={`flex items-center gap-3 ${isCenter ? 'justify-center' : ''}`}>
-        {icon && <span className="text-3xl">{icon}</span>}
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-extrabold text-text tracking-tight leading-[1.08]">
+        {icon && (
+          <span className="flex size-9 shrink-0 items-center justify-center text-primary" aria-hidden="true">
+            {icon}
+          </span>
+        )}
+        <h2 className="font-display text-[2rem] font-bold leading-[1.08] tracking-[-0.035em] text-text md:text-[2.5rem]">
           {title}
         </h2>
       </div>
 
-      {/* Subtitle — concise */}
       {subtitle && (
-        <p className={`mt-5 text-text-secondary text-base md:text-lg leading-relaxed ${isCenter ? 'max-w-xl mx-auto' : 'max-w-2xl'}`}>
+        <p
+          className={`mt-1.5 text-[13px] leading-5 text-text-secondary md:text-sm ${
+            isCenter ? 'mx-auto max-w-2xl' : 'max-w-3xl'
+          }`}
+        >
           {subtitle}
         </p>
       )}
-
-      {/* Accent line */}
-      <div className={`mt-8 flex items-center gap-1.5 ${isCenter ? 'justify-center' : ''}`}>
-        <div className="w-8 h-[2px] bg-primary rounded-full" />
-        <div className="w-2 h-[2px] bg-accent rounded-full" />
-        <div className="w-1 h-[2px] bg-purple rounded-full" />
-      </div>
-
-    </RevealOnScroll>
+    </header>
   );
 }

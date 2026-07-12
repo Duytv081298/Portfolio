@@ -1,156 +1,108 @@
-'use client';
-
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { CirclePlay, Gamepad2, Trophy } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 
-interface TimelineEntry {
-  year: string;
-  title: string;
-  description: string;
-  skills: string[];
-  color: string;
-  icon: string;
-}
-
-const timeline: TimelineEntry[] = [
+const timeline = [
   {
-    year: '2019 — 2021',
-    title: 'Game Developer',
+    year: '2019 - 2021',
+    title: 'Junior Game Developer',
     description:
-      'Bắt đầu hành trình với Cocos Creator. Phát triển các game Hyper Casual và Puzzle cho mobile. Học cách tối ưu performance cho thiết bị low-end.',
-    skills: ['Cocos Creator', 'JavaScript', 'Mobile Game', 'Physics'],
-    color: '#4DA3FF',
-    icon: '🎮',
+      'Built 2D and 3D casual games with Unity and Cocos Creator, focused on gameplay mechanics and performance.',
+    color: '#4F8EF7',
+    icon: Gamepad2,
   },
   {
-    year: '2021 — 2023',
+    year: '2021 - 2023',
     title: 'Playable Ads Developer',
     description:
-      'Chuyên môn hóa vào Playable Ads. Phát triển hệ thống tối ưu bundle size, build pipeline tự động. Tích hợp SDK: AppLovin, IronSource, Meta, TikTok.',
-    skills: ['Playable Ads', 'Bundle Optimization', 'TypeScript', 'HTML5'],
-    color: '#00F5A0',
-    icon: '📱',
+      'Designed and built 30+ playable ads for major ad networks, optimized for small bundles and fast loading.',
+    color: '#00D97E',
+    icon: CirclePlay,
   },
   {
-    year: '2023 — Hiện tại',
+    year: '2023 - Now',
     title: 'Senior Game Developer',
     description:
-      'Lead game development, thiết kế kiến trúc game phức tạp, mentor junior developer. 30+ playable ads shipped. Chuyên gia tối ưu WebGL và performance.',
-    skills: ['Architecture', 'Team Lead', 'WebGL', 'Performance Expert'],
-    color: '#7C5CFF',
-    icon: '🚀',
+      'Lead game development, mentor the team and deliver scalable experiences with dependable performance.',
+    color: '#9B74FF',
+    icon: Trophy,
   },
-];
+] as const;
 
 export default function TimelineSection() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const lineHeight = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%']);
-
   return (
-    <section id="career" className="py-40 md:py-56 relative">
+    <section id="career" className="relative border-b border-border/50 py-10 md:py-12">
       <div className="section-container">
         <SectionHeader
-          accent="career_timeline"
+          accent="journey"
           index="04"
-          title="Journey"
+          title="My Journey"
           subtitle="My path from Game Developer to Senior Game Developer."
-          align="center"
         />
 
-        {/* Timeline */}
-        <div ref={containerRef} className="relative max-w-3xl mx-auto mt-16">
-          {/* Static Line */}
-          <div className="absolute left-8 md:left-1/2 md:-translate-x-px top-0 bottom-0 w-px bg-border" />
-
-          {/* Animated Progress Line */}
-          <motion.div
-            className="absolute left-8 md:left-1/2 md:-translate-x-px top-0 w-px origin-top"
-            style={{
-              height: lineHeight,
-              background: 'linear-gradient(180deg, #4DA3FF, #00F5A0, #7C5CFF)',
-            }}
+        <div className="relative pl-8 lg:pl-0">
+          <div
+            className="absolute bottom-5 left-2 top-5 w-px bg-border-hover/80 lg:hidden"
+            aria-hidden="true"
           />
 
-          {/* Timeline Entries */}
-          <div className="space-y-16">
-            {timeline.map((entry, index) => (
-              <motion.div
-                key={entry.title}
-                className={`relative flex items-start gap-6 md:gap-12 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                }`}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                {/* Dot */}
-                <div className="absolute left-8 md:left-1/2 -translate-x-1/2 z-10">
-                  <motion.div
-                    className="w-4 h-4 rounded-full border-2"
-                    style={{
-                      borderColor: entry.color,
-                      backgroundColor: `${entry.color}33`,
-                      boxShadow: `0 0 12px ${entry.color}44`,
-                    }}
-                    whileInView={{ scale: [0, 1.3, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                  />
-                </div>
+          <div
+            className="absolute left-[14%] right-[14%] top-1/2 hidden h-px -translate-y-1/2 bg-border-hover/80 lg:block"
+            aria-hidden="true"
+          />
+          <span
+            className="absolute left-1/3 top-1/2 z-20 hidden size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-primary bg-bg-primary shadow-[0_0_12px_rgba(79,142,247,0.45)] lg:block"
+            aria-hidden="true"
+          />
+          <span
+            className="absolute left-2/3 top-1/2 z-20 hidden size-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent bg-bg-primary shadow-[0_0_12px_rgba(0,217,126,0.4)] lg:block"
+            aria-hidden="true"
+          />
 
-                {/* Content Card */}
-                <div
-                  className={`flex-1 ml-16 md:ml-0 ${
-                    index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'
-                  }`}
+          <ol className="relative grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-16">
+            {timeline.map((entry) => {
+              const Icon = entry.icon;
+
+              return (
+                <li
+                  key={entry.title}
+                  className="relative z-10 flex min-h-[204px] flex-col rounded-xl border bg-bg-primary p-5 sm:p-6"
+                  style={{
+                    borderColor: `${entry.color}75`,
+                    backgroundImage: `linear-gradient(145deg, ${entry.color}0A 0%, transparent 65%)`,
+                  }}
                 >
-                  {/* Year */}
-                  <span className="inline-block px-3 py-1 rounded-lg text-xs font-code font-medium mb-3 border"
-                    style={{
-                      color: entry.color,
-                      borderColor: `${entry.color}33`,
-                      backgroundColor: `${entry.color}11`,
-                    }}
+                  <span
+                    className="absolute -left-[1.875rem] top-1/2 size-3 -translate-y-1/2 rounded-full border-2 bg-bg-primary lg:hidden"
+                    style={{ borderColor: entry.color, boxShadow: `0 0 10px ${entry.color}70` }}
+                    aria-hidden="true"
+                  />
+
+                  <p
+                    className="font-code text-[11px] font-bold tracking-[0.04em]"
+                    style={{ color: entry.color }}
                   >
                     {entry.year}
-                  </span>
-
-                  {/* Title */}
-                  <div className={`flex items-center gap-2 mb-2 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
-                    <span className="text-xl">{entry.icon}</span>
-                    <h3 className="text-xl font-display font-bold text-text">{entry.title}</h3>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-text-secondary text-sm leading-relaxed mb-4">
+                  </p>
+                  <h3 className="mt-3 font-display text-lg font-semibold text-text">{entry.title}</h3>
+                  <p className="mt-3 max-w-[19rem] pr-8 text-[13px] leading-5 text-text-secondary">
                     {entry.description}
                   </p>
 
-                  {/* Skills */}
-                  <div className={`flex flex-wrap gap-1.5 ${index % 2 === 0 ? 'md:justify-end' : ''}`}>
-                    {entry.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-2 py-0.5 rounded text-[10px] font-code bg-card text-text-muted border border-border"
-                      >
-                        {skill}
-                      </span>
-                    ))}
+                  <div
+                    className="absolute bottom-5 right-5 flex size-11 items-center justify-center rounded-full border"
+                    style={{
+                      color: entry.color,
+                      borderColor: `${entry.color}90`,
+                      backgroundColor: `${entry.color}0D`,
+                    }}
+                    aria-hidden="true"
+                  >
+                    <Icon className="size-6" strokeWidth={1.5} />
                   </div>
-                </div>
-
-                {/* Spacer for alternating layout */}
-                <div className="hidden md:block flex-1" />
-              </motion.div>
-            ))}
-          </div>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </div>
     </section>
