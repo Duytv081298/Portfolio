@@ -56,10 +56,10 @@ export default function Navbar() {
       >
         <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 md:px-10">
           <a
-            href="#hero"
+            href="/"
             onClick={(event) => {
               event.preventDefault();
-              navigateTo('#hero');
+              window.location.reload();
             }}
             className="group flex min-h-11 items-center gap-3 rounded-lg"
           >

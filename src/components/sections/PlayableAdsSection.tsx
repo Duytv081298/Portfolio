@@ -9,6 +9,7 @@ import {
   Minimize2,
   Play,
   RotateCw,
+  Smartphone,
   X,
 } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -70,7 +71,7 @@ const getCategorySvg = (category: string) => {
   }
 };
 
-const INITIAL_VISIBLE_ADS = 25;
+const INITIAL_VISIBLE_ADS = 10;
 
 export default function PlayableAdsSection() {
   const [activeFilter, setActiveFilter] = useState('all');
@@ -78,31 +79,16 @@ export default function PlayableAdsSection() {
   const [activeAd, setActiveAd] = useState<PlayableAd | null>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLandscape, setIsLandscape] = useState(false);
-  const [activeTab, setActiveTab] = useState<'info' | 'config'>('info');
   const [activeBuildIndex, setActiveBuildIndex] = useState<number>(0);
-  const [configSpeed, setConfigSpeed] = useState('1.0');
-  const [configSkin, setConfigSkin] = useState('default');
-  const [configAudio, setConfigAudio] = useState(true);
-  const [configCta, setConfigCta] = useState('Play Now');
-  const [logs, setLogs] = useState<string[]>([]);
+  const [reloadKey, setReloadKey] = useState<number>(0);
   const [highlightedAdId, setHighlightedAdId] = useState<string | null>(null);
 
   const openPlayer = (ad: PlayableAd) => {
     setActiveAd(ad);
     setIsFullscreen(false);
     setIsLandscape(false);
-    setActiveTab('info');
     setActiveBuildIndex(0);
-    setConfigSpeed('1.0');
-    setConfigSkin('default');
-    setConfigAudio(true);
-    setConfigCta('Play Now');
-    setLogs([
-      `Initializing game module: "${ad.title}"`,
-      `Connecting to WebGL context... success.`,
-      `Assets loaded. Draw Calls: 34. Memory: 48MB.`,
-      `Listening for parameters adjustment...`
-    ]);
+    setReloadKey(0);
   };
 
   useEffect(() => {
@@ -142,11 +128,6 @@ export default function PlayableAdsSection() {
     window.addEventListener('play-game', handlePlayGame);
     return () => window.removeEventListener('play-game', handlePlayGame);
   }, []);
-
-  const addLog = (message: string) => {
-    const timestamp = new Date().toLocaleTimeString('en-US', { hour12: false });
-    setLogs((prev) => [...prev, `[${timestamp}] ${message}`]);
-  };
 
   const filteredAds = getPlayablesByCategory(activeFilter);
   const visibleAds =
@@ -353,7 +334,9 @@ export default function PlayableAdsSection() {
       <AnimatePresence>
         {activeAd && (
           <motion.div
-            className="fixed inset-0 z-[60] flex items-center justify-center p-4 md:p-6"
+            className={`fixed z-[100] flex items-center justify-center transition-all ${
+              isFullscreen ? 'inset-x-0 bottom-0 top-[82px] p-0' : 'inset-0 p-4 md:p-6'
+            }`}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -370,7 +353,7 @@ export default function PlayableAdsSection() {
                 isFullscreen
                   ? 'w-full h-full rounded-none'
                   : isLandscape
-                    ? 'w-full h-[85vh] md:w-[980px] md:h-[620px] rounded-2xl'
+                    ? 'w-full h-[85vh] md:w-[1160px] md:h-[620px] rounded-2xl'
                     : 'w-full h-[85vh] md:w-[840px] md:h-[620px] rounded-2xl'
               } transition-all duration-300`}
               initial={{ scale: 0.95, opacity: 0 }}
@@ -379,60 +362,50 @@ export default function PlayableAdsSection() {
               transition={{ type: 'spring', stiffness: 350, damping: 28 }}
             >
               {/* Game Simulator Column */}
-              <div className={`relative flex flex-col justify-center items-center bg-[#07090e] p-4 md:p-8 ${
+              <div className={`relative flex flex-col justify-center items-center bg-[#07090e] ${
                 isFullscreen
                   ? 'w-full h-full p-0'
                   : isLandscape
-                    ? 'w-full md:w-[490px] h-[50%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30'
-                    : 'w-full md:w-[350px] h-[55%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30'
+                    ? 'w-full md:w-[670px] h-[50%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30 p-0'
+                    : 'w-full md:w-[350px] h-[55%] md:h-full flex-shrink-0 border-b md:border-b-0 md:border-r border-border/30 p-0'
               } transition-all duration-300`}>
                 {isFullscreen ? (
                   /* Fullscreen Iframe */
-                  <div className="w-full h-full relative overflow-hidden">
+                  <div className={`relative overflow-hidden bg-black mx-auto transition-all ${
+                    isFullscreen && !isLandscape
+                      ? 'h-full aspect-[9/16] max-w-full shadow-2xl border-x border-white/10'
+                      : 'w-full h-full'
+                  }`}>
                     <iframe
-                      key={activeBuildIndex}
+                      key={`${activeAd.id}-${activeBuildIndex}-${reloadKey}-${isLandscape}`}
                       src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
                         activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
                           ? activeAd.demoBuilds[activeBuildIndex].publicPath
                           : activeAd.publicPath
                       }`}
-                      className="w-full h-full border-0"
+                      className="w-full h-full border-0 block"
+                      scrolling="no"
                       sandbox="allow-scripts allow-same-origin"
                       title={`Play ${activeAd.title}`}
                       allow="autoplay"
                     />
                   </div>
                 ) : (
-                  /* Device Mockup Wrapper */
-                  <div className={`relative transition-all duration-500 ease-out border-[8px] border-[#222736] bg-[#0c0f18] shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex items-center justify-center ${
-                    isLandscape
-                      ? 'w-[426px] h-[240px] rounded-[24px]'
-                      : 'w-[250px] h-[444px] rounded-[36px]'
-                  }`}>
-                    {/* Speaker Notch */}
-                    {!isLandscape && (
-                      <div className="absolute top-[8px] left-1/2 -translate-x-1/2 w-12 h-3.5 bg-[#222736] rounded-full z-20 flex items-center justify-center">
-                        <div className="w-6 h-[2px] bg-white/20 rounded-full" />
-                      </div>
-                    )}
-
-                    {/* Screen wrapper to apply round corners inside the borders */}
-                    <div className={`w-full h-full overflow-hidden bg-black ${
-                      isLandscape ? 'rounded-[14px]' : 'rounded-[26px]'
-                    }`}>
-                      <iframe
-                        key={activeBuildIndex}
-                        src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
-                          activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
-                            ? activeAd.demoBuilds[activeBuildIndex].publicPath
-                            : activeAd.publicPath
-                        }`}
-                        className="w-full h-full border-0"
-                        sandbox="allow-scripts allow-same-origin"
-                        title={`Play ${activeAd.title}`}
-                        allow="autoplay"
-                      />
-                    </div>
+                  /* Simple Iframe Wrapper */
+                  <div className="relative w-full h-full overflow-hidden bg-black transition-all duration-300">
+                    <iframe
+                      key={`${activeAd.id}-${activeBuildIndex}-${reloadKey}-${isLandscape}`}
+                      src={`${process.env.NEXT_PUBLIC_BASE_PATH || ''}${
+                        activeAd.demoBuilds && activeAd.demoBuilds[activeBuildIndex]
+                          ? activeAd.demoBuilds[activeBuildIndex].publicPath
+                          : activeAd.publicPath
+                      }`}
+                      className="w-full h-full border-0 block"
+                      scrolling="no"
+                      sandbox="allow-scripts allow-same-origin"
+                      title={`Play ${activeAd.title}`}
+                      allow="autoplay"
+                    />
                   </div>
                 )}
 
@@ -467,116 +440,87 @@ export default function PlayableAdsSection() {
                     backgroundColor: '#090a0f',
                   }}
                 >
-                  {/* Top Bar with Title and Quick Controls */}
-                  <div className="flex items-start justify-between border-b border-border/40 pb-3">
-                    <div>
-                      <h3 className="text-text text-xl font-display font-bold leading-tight">{activeAd.title}</h3>
-                      <p className="text-primary text-xs font-code mt-1 uppercase tracking-wider capitalize">
-                        {`// ${activeAd.category.replace('-', ' ')}`}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-1.5">
+                  {/* Top Bar with Quick Controls */}
+                  <div className="flex items-center justify-end border-b border-violet-500/30 pb-3.5">
+                    <div className="flex items-center gap-3">
                       <button
                         onClick={handlePrevAd}
-                        className="py-1 px-2.5 rounded-lg text-text-secondary hover:text-primary hover:bg-bg-secondary border border-border/50 transition-all text-[10px] font-code font-bold"
+                        className="h-9 px-4.5 rounded-xl text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/40 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
                         title="Previous Game"
                       >
-                        ← Prev
+                        ← PREV
                       </button>
                       <button
                         onClick={handleNextAd}
-                        className="py-1 px-2.5 rounded-lg text-text-secondary hover:text-primary hover:bg-bg-secondary border border-border/50 transition-all text-[10px] font-code font-bold"
+                        className="h-9 px-4.5 rounded-xl text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/40 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
                         title="Next Game"
                       >
-                        Next →
+                        NEXT →
                       </button>
-                      <div className="w-[1px] h-4 bg-border/40 mx-1" />
                       <button
                         onClick={() => setIsLandscape(!isLandscape)}
-                        className={`p-2 rounded-lg border transition-all ${
+                        className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
                           isLandscape
-                            ? 'text-accent bg-accent/10 border-accent/30'
-                            : 'text-text-secondary hover:text-text hover:bg-bg-secondary border-border/50'
+                            ? 'bg-violet-500/20 border-violet-400 text-white shadow-[0_0_15px_rgba(139,92,246,0.25)]'
+                            : 'bg-transparent border-violet-500/40 text-violet-300 hover:bg-violet-500/20 hover:text-white hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)]'
                         }`}
                         title="Rotate Simulator"
                       >
-                        <RotateCw size={13} className={isLandscape ? 'rotate-90 transition-transform duration-300' : 'transition-transform duration-300'} />
+                        <Smartphone size={15} className={isLandscape ? 'rotate-90 transition-transform duration-300' : 'transition-transform duration-300'} />
+                      </button>
+                      <button
+                        onClick={() => setReloadKey(prev => prev + 1)}
+                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
+                        title="Reload Game"
+                      >
+                        <RotateCw size={15} />
                       </button>
                       <button
                         onClick={() => setIsFullscreen(true)}
-                        className="p-2 rounded-lg text-text-secondary hover:text-text hover:bg-bg-secondary border border-border/50 transition-all"
+                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
                         title="Maximize Player"
                       >
-                        <Maximize2 size={13} />
+                        <Maximize2 size={15} />
                       </button>
                       <button
                         onClick={closePlayer}
-                        className="p-2 rounded-lg text-text-secondary hover:text-danger hover:bg-danger/10 border border-border/50 transition-all"
+                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-danger hover:bg-danger/15 hover:border-danger/35 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
                         title="Close Panel"
                       >
-                        <X size={13} />
+                        <X size={15} />
                       </button>
                     </div>
-                  </div>
-
-                  {/* Tabs Selector */}
-                  <div className="flex border-b border-border/30 my-3.5 text-[11px] font-code">
-                    <button
-                      onClick={() => setActiveTab('info')}
-                      className={`flex-1 pb-2 text-center border-b-2 transition-all ${
-                        activeTab === 'info'
-                          ? 'border-primary text-primary font-bold'
-                          : 'border-transparent text-text-secondary hover:text-text'
-                      }`}
-                    >
-                      📄 Description
-                    </button>
-                    <button
-                      onClick={() => {
-                        setActiveTab('config');
-                        addLog('Sandbox variables loaded successfully.');
-                      }}
-                      className={`flex-1 pb-2 text-center border-b-2 transition-all ${
-                        activeTab === 'config'
-                          ? 'border-accent text-accent font-bold'
-                          : 'border-transparent text-text-secondary hover:text-text'
-                      }`}
-                    >
-                      ⚙️ Configurator (A/B Test)
-                    </button>
                   </div>
 
                   {/* Variant Switcher (If multiple versions exist) */}
                   {activeAd.demoBuilds && activeAd.demoBuilds.length > 1 && (
-                    <div className="mb-4 bg-bg-primary/40 border border-border/40 p-3 rounded-xl">
-                      <label className="text-[9px] text-accent font-code block uppercase tracking-widest mb-1.5 font-bold">
-                        🎮 Select Build Version / Variant ({activeAd.demoBuilds.length})
+                    <div className="mb-4 mt-4 bg-[#141720]/45 border border-violet-500/35 p-3 rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.05)]">
+                      <label className="text-[9px] text-violet-400/80 font-code block uppercase tracking-widest mb-1.5 font-bold">
+                        Select Build Version / Variant ({activeAd.demoBuilds.length})
                       </label>
                       <select
                         value={activeBuildIndex}
                         onChange={(e) => {
                           const idx = parseInt(e.target.value);
                           setActiveBuildIndex(idx);
-                          const buildName = activeAd.demoBuilds?.[idx]?.name || 'Variant';
-                          addLog(`client -> loaded build variant: "${buildName}"`);
                         }}
-                        className="w-full py-1.5 px-3 rounded-lg bg-bg-primary border border-border text-xs text-text font-code outline-none focus:border-accent font-semibold"
+                        className="w-full py-1.5 px-3 rounded-lg bg-[#090a0f] border border-violet-500/40 text-xs text-text-secondary hover:text-white font-code !outline-none focus:!outline-none focus:!ring-0 focus:!ring-offset-0 focus-visible:!outline-none focus-visible:!ring-0 focus:border-violet-400 font-semibold shadow-[0_0_15px_rgba(139,92,246,0.08)] cursor-pointer"
                       >
                         {activeAd.demoBuilds.map((build, i) => (
                           <option key={i} value={i}>
-                            {build.name}
+                            🎮 Version {i + 1}
                           </option>
                         ))}
                       </select>
                     </div>
                   )}
 
-                  {/* Tab Contents */}
-                  {activeTab === 'info' ? (
-                    <div className="space-y-4 flex-1 pr-1 overflow-y-auto">
-                      <div className="flex flex-col items-center text-center py-4">
-                        {/* Preview Image / Fallback */}
-                        <div className="w-48 h-48 md:w-52 md:h-52 rounded-2xl overflow-hidden border-2 border-white shadow-[0_8px_30px_rgba(0,0,0,0.5)] mb-5">
+                  {/* Description Content */}
+                  <div className="space-y-4 flex-1 pr-1 overflow-y-auto mt-4">
+                    <div className="flex flex-col items-center text-center py-4">
+                      {/* Preview Image / Fallback */}
+                      <div className="relative p-[1.5px] rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 shadow-[0_0_30px_rgba(139,92,246,0.4)] mb-6">
+                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
                           {activeAd.icon ? (
                             <img
                               src={activeAd.icon}
@@ -600,189 +544,80 @@ export default function PlayableAdsSection() {
                             </div>
                           )}
                         </div>
-
-                        {/* Badges / Tags */}
-                        <div className="flex flex-wrap justify-center gap-2.5 mb-6">
-                          <span
-                            style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
-                            className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
-                          >
-                            {activeAd.engine}
-                          </span>
-                          <span
-                            style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
-                            className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
-                          >
-                            TypeScript
-                          </span>
-                          <span
-                            style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
-                            className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
-                          >
-                            2D
-                          </span>
-                        </div>
-
-                        {/* Game Title & Description */}
-                        <p className="text-white font-display font-bold text-sm md:text-base leading-relaxed max-w-md mb-6">
-                          {activeAd.description || 'Coming soon...'}
-                        </p>
-
-                        {/* Contributions */}
-                        <div className="w-full text-left max-w-md border-t border-border/40 pt-5 mt-2">
-                          <h4 className="text-white font-display font-bold text-xs uppercase tracking-wider mb-3">
-                            CONTRIBUTIONS:
-                          </h4>
-                          <ul className="list-disc list-inside text-white/90 text-xs md:text-sm space-y-2.5 pl-1">
-                            {(activeAd.contributions && activeAd.contributions.length > 0
-                              ? activeAd.contributions
-                              : ['Coming soon...']
-                            ).map((item, idx) => (
-                              <li key={idx} className="leading-relaxed">
-                                <span className="text-white font-bold ml-1">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
                       </div>
+
+                      {/* Game Title */}
+                      <div className="mb-1 text-center">
+                        <h3 className="font-display font-black text-3xl md:text-4xl tracking-wider text-white uppercase drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]">
+                          {activeAd.title}
+                        </h3>
+                      </div>
+
+                      {/* Sub-title decorator */}
+                      <div className="flex items-center justify-center gap-3 w-full max-w-[280px] mx-auto mb-6 text-violet-400/80">
+                        <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-violet-500/50" />
+                        <span className="font-code text-[9px] uppercase tracking-[0.25em] font-bold">
+                          • Playable Ads •
+                        </span>
+                        <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-violet-500/50" />
+                      </div>
+
+                      {/* Badges / Tags */}
+                      <div className="flex flex-wrap justify-center gap-2.5 mb-6">
+                        <span
+                          style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
+                          className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
+                        >
+                          {activeAd.engine}
+                        </span>
+                        <span
+                          style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
+                          className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
+                        >
+                          TypeScript
+                        </span>
+                        <span
+                          style={{ backgroundColor: '#2c1d4d', color: '#e0bbfd', borderColor: '#6b47c2' }}
+                          className="px-4 py-1.5 rounded-full text-xs font-code font-bold border shadow-md select-none"
+                        >
+                          2D
+                        </span>
+                      </div>
+
+                      {/* Game Description */}
+                      <p className="text-white font-display font-bold text-sm md:text-base leading-relaxed max-w-md mb-6">
+                        {activeAd.description || 'Coming soon...'}
+                      </p>
+
+
                     </div>
-                  ) : (
-                    <div className="space-y-4 flex-1 pr-1 overflow-y-auto">
-                      <div className="bg-bg-primary/50 p-2.5 rounded-lg border border-border/40 text-[10px] text-accent/80 font-code leading-normal">
-                        💡 Tùy biến các tham số dưới đây để mô phỏng tính năng A/B Testing cấu hình game (như thiết lập tại playablelabs.ai).
-                      </div>
-
-                      {/* Speed Selector */}
-                      <div>
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-[9px] text-text-secondary font-code uppercase tracking-widest">Game Speed</span>
-                          <span className="text-xs font-code text-accent font-semibold">{configSpeed}x</span>
-                        </div>
-                        <div className="flex gap-2">
-                          {['1.0', '1.5', '2.0'].map((speed) => (
-                            <button
-                              key={speed}
-                              onClick={() => {
-                                setConfigSpeed(speed);
-                                addLog(`host -> iframe: SET_SPEED = ${speed}`);
-                              }}
-                              className={`flex-1 py-1 rounded font-code text-xs transition-all border ${
-                                configSpeed === speed
-                                  ? 'bg-accent/15 border-accent text-accent font-bold'
-                                  : 'bg-bg-primary border-border hover:border-border-hover text-text-secondary'
-                              }`}
-                            >
-                              {speed}x
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Skins Selector */}
-                      <div>
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="text-[9px] text-text-secondary font-code uppercase tracking-widest">Active Skin</span>
-                          <span className="text-xs font-code text-primary font-semibold capitalize">{configSkin}</span>
-                        </div>
-                        <div className="flex gap-2">
-                          {['default', 'golden', 'retro'].map((skin) => (
-                            <button
-                              key={skin}
-                              onClick={() => {
-                                setConfigSkin(skin);
-                                addLog(`host -> iframe: SET_SKIN = "${skin}"`);
-                              }}
-                              className={`flex-1 py-1 rounded font-code text-xs transition-all border capitalize ${
-                                configSkin === skin
-                                  ? 'bg-primary/15 border-primary text-primary font-bold'
-                                  : 'bg-bg-primary border-border hover:border-border-hover text-text-secondary'
-                              }`}
-                            >
-                              {skin}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Sound & CTA Text */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <span className="text-[9px] text-text-secondary font-code block uppercase tracking-widest mb-1">Audio Engine</span>
-                          <button
-                            onClick={() => {
-                              const nextVal = !configAudio;
-                              setConfigAudio(nextVal);
-                              addLog(`host -> iframe: AUDIO_STATE = ${nextVal ? 'ON' : 'OFF'}`);
-                            }}
-                            className={`w-full py-1 rounded font-code text-xs transition-all border ${
-                              configAudio
-                                ? 'bg-primary/15 border-primary text-primary font-bold'
-                                : 'bg-bg-primary border-border text-text-secondary'
-                            }`}
-                          >
-                            {configAudio ? '🔊 ON' : '🔇 OFF'}
-                          </button>
-                        </div>
-                        <div>
-                          <span className="text-[9px] text-text-secondary font-code block uppercase tracking-widest mb-1">CTA Text</span>
-                          <select
-                            value={configCta}
-                            onChange={(e) => {
-                              setConfigCta(e.target.value);
-                              addLog(`host -> iframe: SET_CTA = "${e.target.value}"`);
-                            }}
-                            className="w-full py-1.5 px-2 rounded bg-bg-primary border border-border text-xs text-text font-code outline-none focus:border-accent"
-                          >
-                            <option value="Play Now">Play Now</option>
-                            <option value="Install">Install</option>
-                            <option value="Claim Reward">Claim Reward</option>
-                          </select>
-                        </div>
-                      </div>
-
-                      {/* Developer Log Console */}
-                      <div>
-                        <span className="text-[9px] text-text-muted font-code block uppercase tracking-wider mb-1">Live Console Logging</span>
-                        <div className="bg-[#0b0c10] border border-border/40 rounded-lg p-2.5 h-20 font-mono text-[9px] text-green-400 overflow-y-auto leading-relaxed flex flex-col gap-0.5 select-none">
-                          {logs.map((log, idx) => (
-                            <div key={idx} className="whitespace-pre-wrap">
-                              <span className="text-accent mr-1">&gt;</span>{log}
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  </div>
 
                   {/* App Store / Google Play Download Links */}
                   {(activeAd.googlePlay || activeAd.appStore) && (
                     <div className="mt-4 pt-3.5 border-t border-border/40 flex flex-wrap gap-2">
-                      {activeAd.googlePlay && (
-                        <a
-                          href={activeAd.googlePlay}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-primary hover:border-primary/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-primary/5"
-                        >
-                          <svg className="w-4 h-4 fill-current transition-transform group-hover:scale-110" viewBox="0 0 24 24">
-                            <path d="M3.609 1.814L13.783 12 3.609 22.186c-.198-.198-.31-.482-.31-.786V2.6c0-.304.112-.588.31-.786zM15.42 13.637l3.204-1.849c.677-.39.677-1.186 0-1.577l-3.204-1.849-2.31 2.31 2.31 2.31zm-11.025-12.61l9.742 9.742-2.31 2.31-7.432-4.29c-.595-.343-1.393-.162-1.782.433v-8.195zm0 21.944v-8.195l1.782.433 7.432-4.29-9.742 9.742c-.389.595-1.187.414-1.782.071z"/>
-                          </svg>
-                          Google Play
-                        </a>
-                      )}
-                      {activeAd.appStore && (
-                        <a
-                          href={activeAd.appStore}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-accent hover:border-accent/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-accent/5"
-                        >
-                          <svg className="w-4 h-4 fill-current" viewBox="0 0 170 170">
-                            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.37.13-9.13-1.9-14.27-6.08-3.35-2.79-7.27-7.48-11.77-14.07-8.27-11.95-14.37-25.26-18.3-39.92-3.93-14.65-5.9-28.79-5.9-42.42 0-14.07 3.35-25.79 10.06-35.16 6.7-9.38 15.22-14.16 25.56-14.34 5.02 0 10.39 1.45 16.12 4.35 5.73 2.9 9.69 4.35 11.9 4.35 1.79 0 5.42-1.34 10.88-4.02 5.46-2.68 10.22-3.9 14.3-3.68 15.22.45 26.83 5.92 34.82 16.41-12.84 7.82-19.16 18.2-18.94 31.14.22 10.27 4.13 18.87 11.72 25.8 7.59 6.92 16.3 10.55 26.13 10.9-2.01 5.92-4.91 12.06-8.71 18.42zM120.3 35.16c0-7.82 2.79-15.02 8.37-21.6 5.58-6.59 12.39-10.4 20.43-11.45.11 1 .17 1.84.17 2.51 0 7.48-2.85 14.63-8.54 21.43-5.69 6.81-12.67 10.6-20.93 11.39-.33-.67-.5-1.45-.5-2.28z" />
-                          </svg>
-                          App Store
-                        </a>
-                      )}
+                      <a
+                        href={activeAd.googlePlay || activeAd.appStore}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-primary hover:border-primary/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-primary/5"
+                      >
+                        <svg className="w-4 h-4 fill-current transition-transform group-hover:scale-110" viewBox="0 0 24 24">
+                          <path d="M3.609 1.814L13.783 12 3.609 22.186c-.198-.198-.31-.482-.31-.786V2.6c0-.304.112-.588.31-.786zM15.42 13.637l3.204-1.849c.677-.39.677-1.186 0-1.577l-3.204-1.849-2.31 2.31 2.31 2.31zm-11.025-12.61l9.742 9.742-2.31 2.31-7.432-4.29c-.595-.343-1.393-.162-1.782.433v-8.195zm0 21.944v-8.195l1.782.433 7.432-4.29-9.742 9.742c-.389.595-1.187.414-1.782.071z"/>
+                        </svg>
+                        Google Play
+                      </a>
+                      <a
+                        href={activeAd.appStore || activeAd.googlePlay}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-accent hover:border-accent/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-accent/5"
+                      >
+                        <svg className="w-4 h-4 fill-current" viewBox="0 0 170 170">
+                          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.37.13-9.13-1.9-14.27-6.08-3.35-2.79-7.27-7.48-11.77-14.07-8.27-11.95-14.37-25.26-18.3-39.92-3.93-14.65-5.9-28.79-5.9-42.42 0-14.07 3.35-25.79 10.06-35.16 6.7-9.38 15.22-14.16 25.56-14.34 5.02 0 10.39 1.45 16.12 4.35 5.73 2.9 9.69 4.35 11.9 4.35 1.79 0 5.42-1.34 10.88-4.02 5.46-2.68 10.22-3.9 14.3-3.68 15.22.45 26.83 5.92 34.82 16.41-12.84 7.82-19.16 18.2-18.94 31.14.22 10.27 4.13 18.87 11.72 25.8 7.59 6.92 16.3 10.55 26.13 10.9-2.01 5.92-4.91 12.06-8.71 18.42zM120.3 35.16c0-7.82 2.79-15.02 8.37-21.6 5.58-6.59 12.39-10.4 20.43-11.45.11 1 .17 1.84.17 2.51 0 7.48-2.85 14.63-8.54 21.43-5.69 6.81-12.67 10.6-20.93 11.39-.33-.67-.5-1.45-.5-2.28z" />
+                        </svg>
+                        App Store
+                      </a>
                     </div>
                   )}
                 </div>
