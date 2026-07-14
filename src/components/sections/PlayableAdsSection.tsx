@@ -87,7 +87,11 @@ export default function PlayableAdsSection() {
     setActiveAd(ad);
     setIsFullscreen(false);
     setIsLandscape(false);
-    setActiveBuildIndex(0);
+    
+    const buildsCount = ad.demoBuilds ? ad.demoBuilds.length : 1;
+    const randomIndex = Math.floor(Math.random() * buildsCount);
+    setActiveBuildIndex(randomIndex);
+    
     setReloadKey(0);
   };
 
@@ -160,11 +164,11 @@ export default function PlayableAdsSection() {
         {/* Compact header: copy on the left, metrics on the right. */}
         <div className="mb-5 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
           <SectionHeader
-            accent="playable_ads"
+            id="playable"
             index="01"
             title="Playable Ads"
             subtitle={`${playableAds.length} playable ads shipped. Click "Play" to try them directly in your browser.`}
-            className="mb-0 min-w-0 flex-1 lg:max-w-xl [&>div:first-child]:!mb-2 [&>div:last-child]:!mt-3 [&>div:last-child]:!h-0.5 [&>div:last-child]:!w-12 [&_h2]:!text-3xl [&_p]:!mt-2 [&_p]:!text-sm [&_p]:!leading-relaxed"
+            className="mb-0 min-w-0 flex-1 lg:max-w-xl"
           />
 
           <RevealOnScroll className="w-full shrink-0 lg:w-auto lg:pb-0.5">
@@ -445,14 +449,14 @@ export default function PlayableAdsSection() {
                     <div className="flex items-center gap-3">
                       <button
                         onClick={handlePrevAd}
-                        className="h-9 px-4.5 rounded-xl text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/40 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
+                        className="h-9 px-4.5 rounded-lg text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/50 hover:border-violet-400 shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
                         title="Previous Game"
                       >
                         ← PREV
                       </button>
                       <button
                         onClick={handleNextAd}
-                        className="h-9 px-4.5 rounded-xl text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/40 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
+                        className="h-9 px-4.5 rounded-lg text-violet-300 hover:text-white bg-violet-500/5 hover:bg-violet-500/20 border border-violet-500/50 hover:border-violet-400 shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all text-xs font-code font-bold uppercase tracking-wider flex items-center justify-center gap-1.5"
                         title="Next Game"
                       >
                         NEXT →
@@ -461,8 +465,8 @@ export default function PlayableAdsSection() {
                         onClick={() => setIsLandscape(!isLandscape)}
                         className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
                           isLandscape
-                            ? 'bg-violet-500/20 border-violet-400 text-white shadow-[0_0_15px_rgba(139,92,246,0.25)]'
-                            : 'bg-transparent border-violet-500/40 text-violet-300 hover:bg-violet-500/20 hover:text-white hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)]'
+                            ? 'bg-violet-500/20 border-violet-400 text-white shadow-[0_0_15px_rgba(168,85,247,0.35)]'
+                            : 'bg-transparent border-violet-500/50 text-violet-300 hover:bg-violet-500/20 hover:text-white hover:border-violet-400 shadow-[0_0_12px_rgba(168,85,247,0.18)]'
                         }`}
                         title="Rotate Simulator"
                       >
@@ -470,21 +474,21 @@ export default function PlayableAdsSection() {
                       </button>
                       <button
                         onClick={() => setReloadKey(prev => prev + 1)}
-                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
+                        className="w-9 h-9 rounded-full border border-violet-500/50 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400 shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all"
                         title="Reload Game"
                       >
                         <RotateCw size={15} />
                       </button>
                       <button
                         onClick={() => setIsFullscreen(true)}
-                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400/60 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
+                        className="w-9 h-9 rounded-full border border-violet-500/50 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-white hover:bg-violet-500/20 hover:border-violet-400 shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all"
                         title="Maximize Player"
                       >
                         <Maximize2 size={15} />
                       </button>
                       <button
                         onClick={closePlayer}
-                        className="w-9 h-9 rounded-full border border-violet-500/40 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-danger hover:bg-danger/15 hover:border-danger/35 shadow-[0_0_15px_rgba(139,92,246,0.1)] transition-all"
+                        className="w-9 h-9 rounded-full border border-violet-500/50 flex items-center justify-center bg-violet-500/5 text-violet-300 hover:text-danger hover:bg-danger/15 hover:border-danger/35 shadow-[0_0_12px_rgba(168,85,247,0.18)] transition-all"
                         title="Close Panel"
                       >
                         <X size={15} />
@@ -494,7 +498,7 @@ export default function PlayableAdsSection() {
 
                   {/* Variant Switcher (If multiple versions exist) */}
                   {activeAd.demoBuilds && activeAd.demoBuilds.length > 1 && (
-                    <div className="mb-4 mt-4 bg-[#141720]/45 border border-violet-500/35 p-3 rounded-xl shadow-[0_0_20px_rgba(139,92,246,0.05)]">
+                    <div className="mb-4 mt-4 bg-[#141720]/45 border border-violet-500/45 p-3 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.12)]">
                       <label className="text-[9px] text-violet-400/80 font-code block uppercase tracking-widest mb-1.5 font-bold">
                         Select Build Version / Variant ({activeAd.demoBuilds.length})
                       </label>
@@ -504,7 +508,7 @@ export default function PlayableAdsSection() {
                           const idx = parseInt(e.target.value);
                           setActiveBuildIndex(idx);
                         }}
-                        className="w-full py-1.5 px-3 rounded-lg bg-[#090a0f] border border-violet-500/40 text-xs text-text-secondary hover:text-white font-code !outline-none focus:!outline-none focus:!ring-0 focus:!ring-offset-0 focus-visible:!outline-none focus-visible:!ring-0 focus:border-violet-400 font-semibold shadow-[0_0_15px_rgba(139,92,246,0.08)] cursor-pointer"
+                        className="w-full py-1.5 px-3 rounded-lg bg-[#090a0f] border border-violet-500/50 text-xs text-text-secondary hover:text-white font-code outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 focus:border-violet-400 font-semibold shadow-[0_0_15px_rgba(168,85,247,0.18)] cursor-pointer"
                       >
                         {activeAd.demoBuilds.map((build, i) => (
                           <option key={i} value={i}>
@@ -519,31 +523,29 @@ export default function PlayableAdsSection() {
                   <div className="space-y-4 flex-1 pr-1 overflow-y-auto mt-4">
                     <div className="flex flex-col items-center text-center py-4">
                       {/* Preview Image / Fallback */}
-                      <div className="relative p-[1.5px] rounded-2xl bg-gradient-to-r from-violet-500 via-fuchsia-500 to-cyan-500 shadow-[0_0_30px_rgba(139,92,246,0.4)] mb-6">
-                        <div className="w-36 h-36 md:w-40 md:h-40 rounded-[14px] overflow-hidden bg-black flex items-center justify-center">
-                          {activeAd.icon ? (
-                            <img
-                              src={activeAd.icon}
-                              alt={activeAd.title}
-                              className="w-full h-full object-cover"
-                            />
-                          ) : (
-                            <div
-                              className="w-full h-full flex flex-col items-center justify-center p-4 relative overflow-hidden"
-                              style={{
-                                background: `linear-gradient(135deg, ${activeAd.coverColor}, ${activeAd.coverColorSecondary})`,
-                              }}
-                            >
-                              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)] pointer-events-none" />
-                              <div className="scale-150 mb-3">
-                                {getCategorySvg(activeAd.category)}
-                              </div>
-                              <span className="text-2xl font-display font-black text-white/90 uppercase tracking-widest bg-black/35 px-2.5 py-1 rounded backdrop-blur-[2px] border border-white/5 select-none">
-                                {activeAd.title.slice(0, 3)}
-                              </span>
+                      <div className="w-36 h-36 md:w-40 md:h-40 rounded-xl overflow-hidden bg-black flex items-center justify-center border border-violet-500/70 shadow-[0_0_25px_rgba(168,85,247,0.45)] mb-6">
+                        {activeAd.icon ? (
+                          <img
+                            src={activeAd.icon}
+                            alt={activeAd.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <div
+                            className="w-full h-full flex flex-col items-center justify-center p-4 relative overflow-hidden"
+                            style={{
+                              background: `linear-gradient(135deg, ${activeAd.coverColor}, ${activeAd.coverColorSecondary})`,
+                            }}
+                          >
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.15),transparent_70%)] pointer-events-none" />
+                            <div className="scale-150 mb-3">
+                              {getCategorySvg(activeAd.category)}
                             </div>
-                          )}
-                        </div>
+                            <span className="text-2xl font-display font-black text-white/90 uppercase tracking-widest bg-black/35 px-2.5 py-1 rounded backdrop-blur-[2px] border border-white/5 select-none">
+                              {activeAd.title.slice(0, 3)}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Game Title */}
@@ -595,28 +597,39 @@ export default function PlayableAdsSection() {
 
                   {/* App Store / Google Play Download Links */}
                   {(activeAd.googlePlay || activeAd.appStore) && (
-                    <div className="mt-4 pt-3.5 border-t border-border/40 flex flex-wrap gap-2">
+                    <div className="mt-4 pt-3.5 border-t border-violet-500/35 flex flex-col sm:flex-row gap-3">
                       <a
                         href={activeAd.googlePlay || activeAd.appStore}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-primary hover:border-primary/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-primary/5"
+                        className="flex-1 inline-flex items-center justify-between px-5 h-13 rounded-xl bg-[#090a0f] border border-violet-500/55 hover:border-violet-400 hover:bg-[#141720]/60 text-sm font-sans font-semibold text-white tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)]"
                       >
-                        <svg className="w-4 h-4 fill-current transition-transform group-hover:scale-110" viewBox="0 0 24 24">
-                          <path d="M3.609 1.814L13.783 12 3.609 22.186c-.198-.198-.31-.482-.31-.786V2.6c0-.304.112-.588.31-.786zM15.42 13.637l3.204-1.849c.677-.39.677-1.186 0-1.577l-3.204-1.849-2.31 2.31 2.31 2.31zm-11.025-12.61l9.742 9.742-2.31 2.31-7.432-4.29c-.595-.343-1.393-.162-1.782.433v-8.195zm0 21.944v-8.195l1.782.433 7.432-4.29-9.742 9.742c-.389.595-1.187.414-1.782.071z"/>
-                        </svg>
-                        Google Play
+                        <div className="flex items-center gap-3">
+                          <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                            <g fill="none" fillRule="evenodd">
+                              <path d="M3.25 1.77c-.15.2-.25.46-.25.79v18.88c0 .33.1.59.25.79l.06.06L13.9 12.7v-.23L3.31 1.71l-.06.06z" fill="#00F0FF" />
+                              <path d="M17.43 16.32l-3.53-3.53v-.23l3.53-3.53.08.05 4.18 2.38c1.19.67 1.19 1.78 0 2.46l-4.18 2.38-.08.02z" fill="#FF3A44" />
+                              <path d="M13.9 12.56L3.31 22.25c.39.41 1.02.46 1.73.06l12.4-7.05-3.54-3.54v-.23l.03-.02z" fill="#FFC107" />
+                              <path d="M13.9 11.44l3.54-3.54L5.04 1.69c-.71-.4-1.34-.35-1.73.06L13.9 11.44z" fill="#00E676" />
+                            </g>
+                          </svg>
+                          Google Play
+                        </div>
+                        <span className="text-violet-400/80 font-code font-bold text-sm select-none">&gt;</span>
                       </a>
                       <a
                         href={activeAd.appStore || activeAd.googlePlay}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 min-w-[120px] inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-black/40 hover:bg-[#141720] border border-border/85 text-xs text-text-secondary hover:text-accent hover:border-accent/40 font-code font-bold tracking-wider transition-all duration-300 shadow-md hover:shadow-accent/5"
+                        className="flex-1 inline-flex items-center justify-between px-5 h-13 rounded-xl bg-[#090a0f] border border-violet-500/55 hover:border-violet-400 hover:bg-[#141720]/60 text-sm font-sans font-semibold text-white tracking-wide transition-all duration-300 shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)]"
                       >
-                        <svg className="w-4 h-4 fill-current" viewBox="0 0 170 170">
-                          <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.37.13-9.13-1.9-14.27-6.08-3.35-2.79-7.27-7.48-11.77-14.07-8.27-11.95-14.37-25.26-18.3-39.92-3.93-14.65-5.9-28.79-5.9-42.42 0-14.07 3.35-25.79 10.06-35.16 6.7-9.38 15.22-14.16 25.56-14.34 5.02 0 10.39 1.45 16.12 4.35 5.73 2.9 9.69 4.35 11.9 4.35 1.79 0 5.42-1.34 10.88-4.02 5.46-2.68 10.22-3.9 14.3-3.68 15.22.45 26.83 5.92 34.82 16.41-12.84 7.82-19.16 18.2-18.94 31.14.22 10.27 4.13 18.87 11.72 25.8 7.59 6.92 16.3 10.55 26.13 10.9-2.01 5.92-4.91 12.06-8.71 18.42zM120.3 35.16c0-7.82 2.79-15.02 8.37-21.6 5.58-6.59 12.39-10.4 20.43-11.45.11 1 .17 1.84.17 2.51 0 7.48-2.85 14.63-8.54 21.43-5.69 6.81-12.67 10.6-20.93 11.39-.33-.67-.5-1.45-.5-2.28z" />
-                        </svg>
-                        App Store
+                        <div className="flex items-center gap-3">
+                          <svg className="w-5 h-5 fill-white shrink-0" viewBox="0 0 170 170">
+                            <path d="M150.37 130.25c-2.45 5.66-5.35 10.87-8.71 15.66-4.58 6.53-8.33 11.05-11.22 13.56-4.48 4.12-9.28 6.23-14.42 6.35-3.69 0-8.14-1.05-13.32-3.18-5.19-2.12-9.97-3.17-14.34-3.17-4.58 0-9.49 1.05-14.75 3.17-5.26 2.13-9.5 3.24-12.74 3.35-4.37.13-9.13-1.9-14.27-6.08-3.35-2.79-7.27-7.48-11.77-14.07-8.27-11.95-14.37-25.26-18.3-39.92-3.93-14.65-5.9-28.79-5.9-42.42 0-14.07 3.35-25.79 10.06-35.16 6.7-9.38 15.22-14.16 25.56-14.34 5.02 0 10.39 1.45 16.12 4.35 5.73 2.9 9.69 4.35 11.9 4.35 1.79 0 5.42-1.34 10.88-4.02 5.46-2.68 10.22-3.9 14.3-3.68 15.22.45 26.83 5.92 34.82 16.41-12.84 7.82-19.16 18.2-18.94 31.14.22 10.27 4.13 18.87 11.72 25.8 7.59 6.92 16.3 10.55 26.13 10.9-2.01 5.92-4.91 12.06-8.71 18.42zM120.3 35.16c0-7.82 2.79-15.02 8.37-21.6 5.58-6.59 12.39-10.4 20.43-11.45.11 1 .17 1.84.17 2.51 0 7.48-2.85 14.63-8.54 21.43-5.69 6.81-12.67 10.6-20.93 11.39-.33-.67-.5-1.45-.5-2.28z" />
+                          </svg>
+                          App Store
+                        </div>
+                        <span className="text-violet-400/80 font-code font-bold text-sm select-none">&gt;</span>
                       </a>
                     </div>
                   )}

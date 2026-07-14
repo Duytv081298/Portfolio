@@ -4,17 +4,16 @@ import { Download, Gamepad2, Mail, MapPin, Send } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FacebookIcon, GithubIcon } from '@/components/ui/BrandIcons';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
+import SectionHeader from '@/components/ui/SectionHeader';
 
 const contactDetails = [
   { label: 'Email', value: 'duytv0812@gmail.com', Icon: Mail },
-  { label: 'Location', value: 'Ho Chi Minh City, Vietnam', Icon: MapPin },
-  { label: 'Resume', value: 'Download CV', Icon: Download },
+  { label: 'Location', value: 'Hanoi, Vietnam', Icon: MapPin },
 ];
 
 const contactActions = [
   { label: 'GitHub', href: 'https://github.com/Duytv081298', Icon: GithubIcon },
   { label: 'Facebook', href: 'https://web.facebook.com/Duytv98', Icon: FacebookIcon },
-  { label: 'Email', href: 'mailto:duytv0812@gmail.com', Icon: Mail },
   { label: 'Download CV', href: '#', Icon: Download },
 ];
 
@@ -27,11 +26,12 @@ export default function ContactSection() {
 
       <div className="section-container relative z-10">
         <RevealOnScroll className="mb-6">
-          <p className="mb-2 font-code text-[10px] font-semibold uppercase tracking-[0.14em] text-primary">Contact</p>
-          <h2 className="font-display text-2xl font-bold tracking-[-0.025em] text-text md:text-[32px]">
-            Let&apos;s build something great together!
-          </h2>
-          <p className="mt-1.5 text-xs text-text-secondary">Interested in working together? Let&apos;s build something amazing.</p>
+          <SectionHeader
+            id="contact"
+            accent="contact"
+            title="Let's build something great together!"
+            className="mb-0"
+          />
         </RevealOnScroll>
 
         <RevealOnScroll>

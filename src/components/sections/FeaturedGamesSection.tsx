@@ -36,9 +36,9 @@ export default function FeaturedGamesSection() {
     >
       <div className="section-container">
         <SectionHeader
+          id="games"
           title="Games Portfolio"
           index="02"
-          accent="games_portfolio"
           subtitle="Core game development across Mobile, Instant Platforms and Web."
           className="mb-6"
         />

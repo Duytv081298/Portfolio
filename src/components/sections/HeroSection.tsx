@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'motion/react';
-import { Award, BriefcaseBusiness, Download, Gamepad2, Layers3, Play, Zap } from 'lucide-react';
+import { BriefcaseBusiness, Download, Gamepad2, Layers3, Play, Zap } from 'lucide-react';
 import { GithubIcon, FacebookIcon } from '@/components/ui/BrandIcons';
 import MagneticButton from '@/components/ui/MagneticButton';
 import GlowOrb from '@/components/effects/GlowOrb';
@@ -11,7 +11,7 @@ const stats = [
   { value: '30+', label: 'Projects', color: '#3EA6FF', Icon: Layers3 },
   { value: '5+', label: 'Years Exp.', color: '#00DFA2', Icon: Zap },
   { value: '5+', label: 'Game Studios', color: '#9B74FF', Icon: BriefcaseBusiness },
-  { value: '5yr+', label: 'Experience', color: '#8AB4FF', Icon: Award },
+  { value: 'HTML5', label: 'Cocos Creator', color: '#8AB4FF', Icon: Gamepad2 },
 ];
 
 const iconPositions = [
@@ -35,10 +35,6 @@ const heroGames = playableAds.filter((ad) => ad.icon).slice(0, iconPositions.len
 
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
-
-  const scrollToPlayable = () => {
-    document.getElementById('playable')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
-  };
 
   const openGame = (slug: string) => {
     window.dispatchEvent(new CustomEvent('play-game', { detail: { slug } }));
@@ -83,7 +79,7 @@ export default function HeroSection() {
                 </span>
               </h1>
               <p className="mt-4 font-display text-lg font-semibold text-[#A8B6CB] lg:text-xl">
-                Senior C# / Game Developer
+                Cocos Developer
               </p>
               <p className="mt-4 max-w-[570px] text-sm leading-7 text-text-secondary">
                 I build high-performance, engaging and scalable games and playable ads across Mobile, Web and Instant Platforms.
@@ -116,7 +112,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.24 }}
               className="mt-7 flex flex-col gap-3 sm:flex-row"
             >
-              <MagneticButton variant="primary" size="md" onClick={scrollToPlayable} className="min-h-12 min-w-[245px] text-sm font-semibold">
+              <MagneticButton variant="primary" size="md" onClick={() => openGame('arrow')} className="min-h-12 min-w-[245px] text-sm font-semibold">
                 <Play size={15} fill="currentColor" aria-hidden="true" />
                 Play Demo Games
               </MagneticButton>

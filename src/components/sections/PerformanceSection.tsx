@@ -105,7 +105,7 @@ export default function PerformanceSection() {
     <section id="performance" className="relative border-b border-border/50 py-8">
       <div className="section-container">
         <SectionHeader
-          accent="performance_matters"
+          id="performance"
           title="Performance"
           subtitle="Built with optimization in mind for the best player experience."
           className="mb-5"

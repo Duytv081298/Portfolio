@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { Gamepad2, Mail, Menu, X } from 'lucide-react';
-import { FacebookIcon, GithubIcon } from '@/components/ui/BrandIcons';
+import { Gamepad2, Mail, Menu, X, Home, Box, Layers3, Flag } from 'lucide-react';
+import { FacebookIcon, GithubIcon, InstagramIcon } from '@/components/ui/BrandIcons';
 
 const navItems = [
-  { label: 'Home', href: '#hero' },
-  { label: 'Playable Ads', href: '#playable' },
-  { label: 'Games', href: '#games' },
-  { label: 'Tech Stack', href: '#tech' },
-  { label: 'Journey', href: '#career' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '#hero', Icon: Home },
+  { label: 'Playable Ads', href: '#playable', Icon: Gamepad2 },
+  { label: 'Games', href: '#games', Icon: Box },
+  { label: 'Tech Stack', href: '#tech', Icon: Layers3 },
+  { label: 'Journey', href: '#career', Icon: Flag },
+  { label: 'Contact', href: '#contact', Icon: Mail },
 ];
 
 export default function Navbar() {
@@ -19,29 +20,75 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
   const [scrolled, setScrolled] = useState(false);
   const reduceMotion = useReducedMotion();
+  const isScrollingRef = useRef(false);
 
   useEffect(() => {
+    // 1. Scroll-top background change (no layout reflow)
     const handleScroll = () => {
       setScrolled(window.scrollY > 24);
+    };
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // 2. IntersectionObserver for active section (highly performant, no layout thrashing)
+    const visibleSections = new Set<string>();
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-140px 0px -50% 0px', // detects when section is in upper half of viewport
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      if (isScrollingRef.current) return;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visibleSections.add(entry.target.id);
+        } else {
+          visibleSections.delete(entry.target.id);
+        }
+      });
+
+      // Find the active section (search from bottom to top to match scrolling progression)
       for (let index = navItems.length - 1; index >= 0; index -= 1) {
         const id = navItems[index].href.slice(1);
-        const section = document.getElementById(id);
-        if (section && section.getBoundingClientRect().top <= 140) {
+        if (visibleSections.has(id)) {
           setActiveSection(id);
-          return;
+          break;
         }
       }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe each section
+    navItems.forEach((item) => {
+      const id = item.href.slice(1);
+      const element = document.getElementById(id);
+      if (element) {
+        observer.observe(element);
+      }
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const navigateTo = (href: string) => {
     setMobileOpen(false);
-    document.getElementById(href.slice(1))?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    const id = href.slice(1);
+    setActiveSection(id);
+    
+    isScrollingRef.current = true;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    
+    setTimeout(() => {
+      isScrollingRef.current = false;
+    }, 1200);
   };
 
   return (
@@ -50,12 +97,13 @@ export default function Navbar() {
         aria-label="Primary navigation"
         className={`fixed inset-x-0 top-0 z-50 h-[82px] border-b transition-all duration-300 ${
           scrolled
-            ? 'border-border/90 bg-bg-primary/95 shadow-[0_8px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl'
-            : 'border-border/60 bg-bg-primary/88 backdrop-blur-md'
+            ? 'border-violet-500/30 bg-bg-primary/95 shadow-[0_8px_30px_rgba(0,0,0,0.28)] backdrop-blur-xl'
+            : 'border-violet-500/20 bg-bg-primary/88 backdrop-blur-md'
         }`}
       >
         <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between px-6 md:px-10">
-          <a
+          {/* Logo Branding */}
+          <Link
             href="/"
             onClick={(event) => {
               event.preventDefault();
@@ -63,18 +111,19 @@ export default function Navbar() {
             }}
             className="group flex min-h-11 items-center gap-3 rounded-lg"
           >
-            <span className="grid h-11 w-11 place-items-center rounded-full border border-primary/25 bg-gradient-to-br from-primary/12 to-purple/10 shadow-[inset_0_0_18px_rgba(62,166,255,0.06)]">
-              <Gamepad2 size={22} className="text-primary transition-transform duration-200 group-hover:scale-105" aria-hidden="true" />
+            <span className="grid h-11 w-11 place-items-center rounded-full border border-violet-500 bg-[#090a0f] shadow-[0_0_12px_rgba(168,85,247,0.3)]">
+              <Gamepad2 size={20} className="text-violet-400" aria-hidden="true" />
             </span>
             <span className="hidden flex-col sm:flex">
-              <span className="font-display text-sm font-bold uppercase leading-tight tracking-[0.08em] text-text">
-                Duy <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Dev</span>
+              <span className="font-display text-[17px] font-extrabold uppercase leading-tight tracking-[0.08em] text-text">
+                Duy <span className="text-violet-400">Dev</span>
               </span>
-              <span className="font-code text-[8px] uppercase tracking-[0.15em] text-text-muted">Game Developer</span>
+              <span className="font-code text-[10px] font-bold uppercase tracking-[0.2em] text-violet-400/80">Game Developer</span>
             </span>
-          </a>
+          </Link>
 
-          <div className="hidden items-center gap-8 lg:flex xl:gap-10">
+          {/* Middle Nav Capsule Menu */}
+          <div className="hidden lg:flex items-center gap-6 px-6 py-2.5 rounded-xl border border-violet-500/30 bg-[#090a0f]/60 backdrop-blur-md shadow-[0_0_15px_rgba(139,92,246,0.03)]">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
@@ -83,16 +132,18 @@ export default function Navbar() {
                   type="button"
                   onClick={() => navigateTo(item.href)}
                   aria-current={isActive ? 'page' : undefined}
-                  className={`relative min-h-11 cursor-pointer px-1 font-code text-[10px] font-semibold uppercase tracking-[0.08em] transition-colors ${
+                  className={`relative min-h-9 cursor-pointer px-1.5 font-code text-[13px] font-bold uppercase tracking-[0.08em] transition-colors flex items-center gap-2.5 ${
                     isActive ? 'text-primary' : 'text-text-secondary hover:text-text'
                   }`}
                 >
-                  {item.label}
+                  <item.Icon size={15} className={isActive ? 'text-primary' : 'text-text-secondary'} />
+                  <span>{item.label}</span>
                   {isActive && (
                     <motion.span
-                      layoutId="nav-active"
-                      className="absolute bottom-[5px] left-0 right-0 h-[2px] rounded-full bg-gradient-to-r from-primary to-accent shadow-[0_0_8px_rgba(0,217,126,0.35)]"
-                      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 420, damping: 34 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute -bottom-[9px] left-0 right-0 h-[2.5px] rounded-full bg-gradient-to-r from-primary to-accent shadow-[0_0_8px_rgba(34,211,238,0.5)]"
                     />
                   )}
                 </button>
@@ -100,14 +151,15 @@ export default function Navbar() {
             })}
           </div>
 
-          <div className="flex items-center gap-1">
-            <div className="hidden items-center md:flex">
+          {/* Social Icons Group & Mobile Menu Trigger */}
+          <div className="flex items-center gap-1.5">
+            <div className="hidden items-center gap-2.5 md:flex">
               <a
                 href="https://github.com/Duytv081298"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
-                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-[#090a0f] border border-violet-500/50 text-violet-300 hover:border-violet-400 hover:bg-violet-500/10 transition-all shadow-[0_0_12px_rgba(168,85,247,0.05)] hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]"
               >
                 <GithubIcon size={16} />
               </a>
@@ -116,16 +168,18 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
-                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-[#090a0f] border border-violet-500/50 text-violet-300 hover:border-violet-400 hover:bg-violet-500/10 transition-all shadow-[0_0_12px_rgba(168,85,247,0.05)] hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]"
               >
                 <FacebookIcon size={16} />
               </a>
               <a
-                href="mailto:duytv0812@gmail.com"
-                aria-label="Email"
-                className="grid h-11 w-11 place-items-center rounded-lg text-text-secondary transition-colors hover:bg-card hover:text-text"
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="grid h-9 w-9 place-items-center rounded-lg bg-[#090a0f] border border-violet-500/50 text-violet-300 hover:border-violet-400 hover:bg-violet-500/10 transition-all shadow-[0_0_12px_rgba(168,85,247,0.05)] hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]"
               >
-                <Mail size={16} aria-hidden="true" />
+                <InstagramIcon size={16} />
               </a>
             </div>
 
@@ -142,6 +196,7 @@ export default function Navbar() {
         </div>
       </nav>
 
+      {/* Mobile Menu Drawer */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -165,11 +220,12 @@ export default function Navbar() {
                     key={item.href}
                     type="button"
                     onClick={() => navigateTo(item.href)}
-                    className={`min-h-12 w-full rounded-xl px-4 text-left text-sm font-medium transition-colors ${
+                    className={`min-h-12 w-full rounded-xl px-4 text-left text-sm font-medium transition-colors flex items-center gap-3.5 ${
                       isActive ? 'bg-primary/10 text-primary' : 'text-text-secondary hover:bg-card hover:text-text'
                     }`}
                   >
-                    {item.label}
+                    <item.Icon size={16} />
+                    <span>{item.label}</span>
                   </button>
                 );
               })}

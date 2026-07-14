@@ -13,6 +13,7 @@ import TimelineSection from '@/components/sections/TimelineSection';
 import ContactSection from '@/components/sections/ContactSection';
 import GridBackground from '@/components/effects/GridBackground';
 import MouseSpotlight from '@/components/effects/MouseSpotlight';
+import RevealOnScroll from '@/components/ui/RevealOnScroll';
 
 // Dynamic import for Three.js (client-only, no SSR)
 const ParticleField = dynamic(
@@ -36,12 +37,30 @@ export default function Home() {
       {/* Main Content */}
       <main className="relative z-10">
         <HeroSection />
-        <PlayableAdsSection />
-        <FeaturedGamesSection />
-        <TechStackSection />
-        <PerformanceSection />
-        <TimelineSection />
-        <ContactSection />
+        
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <PlayableAdsSection />
+        </RevealOnScroll>
+
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <FeaturedGamesSection />
+        </RevealOnScroll>
+
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <TechStackSection />
+        </RevealOnScroll>
+
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <PerformanceSection />
+        </RevealOnScroll>
+
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <TimelineSection />
+        </RevealOnScroll>
+
+        <RevealOnScroll direction="up" duration={0.85} delay={0.05}>
+          <ContactSection />
+        </RevealOnScroll>
       </main>
 
       <Footer />

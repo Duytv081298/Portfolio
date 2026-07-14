@@ -11,7 +11,7 @@ export default function BlogSection() {
     <section id="blog" className="py-32 md:py-44 relative bg-bg-secondary/40 border-y border-border/30">
       <div className="section-container">
         <SectionHeader
-          accent="technical_blog"
+          id="blog"
           title="Blog"
           subtitle="Technical deep-dives về game development, optimization và kiến trúc. Đang được viết và sẽ cập nhật sớm."
         />

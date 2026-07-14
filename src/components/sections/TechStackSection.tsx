@@ -117,7 +117,7 @@ export default function TechStackSection() {
     <section id="tech" className="relative border-b border-border/50 bg-bg-secondary/35 py-12 md:py-14">
       <div className="section-container">
         <SectionHeader
-          accent="tech_stack"
+          id="tech"
           index="03"
           title="Tech Stack"
           subtitle="Tools and engines I use to build high-quality games."

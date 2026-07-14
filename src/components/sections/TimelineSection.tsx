@@ -33,7 +33,7 @@ export default function TimelineSection() {
     <section id="career" className="relative border-b border-border/50 py-10 md:py-12">
       <div className="section-container">
         <SectionHeader
-          accent="journey"
+          id="career"
           index="04"
           title="My Journey"
           subtitle="My path from Game Developer to Senior Game Developer."
