@@ -54,8 +54,8 @@
 ### 🐍 Coding Activity
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake.svg">
-    <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake.svg">
+    <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake.svg">
   </picture>
 </div>
