@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Avatar/Avatar_1.jpg" width="160" height="160" style="border-radius: 50%; object-fit: cover; border: 3px solid #7c5cff;" alt="Trịnh Văn Duy Avatar" />
+  <img src="Avatar/Avatar.png" width="160" height="160" style="border-radius: 50%; object-fit: cover; border: 3px solid #7c5cff;" alt="Trịnh Văn Duy Avatar" />
 </p>
 
 <h1 align="center">Hi 👋, I'm Duy (Duytv)</h1>
