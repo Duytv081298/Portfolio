@@ -47,15 +47,15 @@
 
 ### 📊 GitHub Statistics
 <p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=Duytv081298&show_icons=true&theme=tokyonight" alt="Duy's GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Duytv081298&layout=compact&theme=tokyonight" alt="Top Langs" />
+  <img src="https://github-stats-extended.vercel.app/api?username=Duytv081298&show_icons=true&theme=tokyonight" alt="Duy's GitHub Stats" />
+  <img src="https://github-stats-extended.vercel.app/api/top-langs/?username=Duytv081298&layout=compact&theme=tokyonight" alt="Top Langs" />
 </p>
 
 ### 🐍 Coding Activity
 <div align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-contribution-grid-snake-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-contribution-grid-snake.svg">
-    <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-contribution-grid-snake.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake.svg">
+    <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Duytv081298/Duytv081298/output/github-snake.svg">
   </picture>
 </div>
