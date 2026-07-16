@@ -1,7 +1,7 @@
 <table>
   <tr>
     <td width="270" align="center" valign="top">
-      <img src="Avatar/Avatar.png" width="200" style="border-radius:50%;border:3px solid #7c5cff;object-fit:cover;" alt="Trịnh Văn Duy" />
+      <img src="Avatar/Avatar_circle.png" width="200" alt="Trịnh Văn Duy" />
     </td>
     <td valign="top">
       <h1>Hi 👋, I'm Duy (Duytv)</h1>
