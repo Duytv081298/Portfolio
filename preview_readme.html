@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duytv081298 – README Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      padding: 32px 16px;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+
+    /* ── HEADER ── */
+    .header-card {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .avatar-wrap img {
+      width: 180px;
+      border-radius: 10px;
+      display: block;
+    }
+    .header-info { flex: 1; }
+    .header-info h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #e6edf3;
+      margin-bottom: 4px;
+    }
+    .header-info .subtitle {
+      font-size: 14px;
+      color: #8b949e;
+      margin-bottom: 12px;
+    }
+    .header-info .subtitle strong { color: #a855f7; }
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .badge {
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge .label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .badge.role  { background: #2d1b4e; color: #c084fc; border: 1px solid #6d28d9; }
+    .badge.level { background: #3d1f00; color: #fb923c; border: 1px solid #c2410c; }
+    .badge.focus { background: #0d2a52; color: #60a5fa; border: 1px solid #1d4ed8; }
+    .header-info p { color: #8b949e; line-height: 1.6; font-size: 13px; }
+
+    /* ── CONTACT ── */
+    .contact-card {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .contact-item .icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #21262d;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .contact-item .info .contact-label { font-size: 10px; color: #8b949e; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+    .contact-item .info .contact-value { font-size: 13px; color: #4c90e8; font-weight: 500; }
+    .contact-divider { width: 1px; height: 30px; background: #30363d; }
+
+    /* ── TWO COLS ── */
+    .two-col {
+      display: flex;
+      gap: 12px;
+    }
+    .two-col .card { flex: 1; }
+
+    /* About Me */
+    .about-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .about-card p  { font-size: 13px; color: #8b949e; line-height: 1.65; margin-bottom: 10px; }
+    .about-card p strong { color: #e6edf3; }
+    .about-card p:last-child { margin-bottom: 0; }
+
+    /* Skills card */
+    .skills-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .skill-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #21262d;
+      gap: 12px;
+    }
+    .skill-row:last-child { border-bottom: none; }
+    .skill-name { font-size: 12.5px; font-weight: 600; color: #e6edf3; min-width: 180px; }
+    .skill-right { display: flex; align-items: center; gap: 10px; min-width: 160px; justify-content: flex-end; }
+    .progress-track {
+      width: 100px; height: 10px;
+      background: #21262d;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-fill { height: 100%; border-radius: 5px; }
+    .skill-label { font-size: 11px; font-weight: 700; min-width: 60px; text-align: right; }
+
+    /* ── TECH STACK ── */
+    .tech-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pill {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid transparent;
+    }
+
+    /* ── DEMO PROJECTS ── */
+    .demo-card h2 { font-size: 15px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .demo-grid { display: flex; gap: 12px; }
+    .demo-item {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .demo-item img { width: 100%; height: 130px; object-fit: cover; display: block; }
+    .demo-content { padding: 12px; }
+    .demo-content a { text-decoration: none; }
+    .demo-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: block; }
+    .demo-content p { font-size: 11.5px; color: #8b949e; line-height: 1.5; margin-bottom: 10px; }
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid;
+    }
+
+    /* ── STATS ── */
+    .stats-card {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+    }
+    .stat-item .stat-num {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .stat-item .stat-label {
+      font-size: 11px;
+      color: #8b949e;
+      margin-top: 2px;
+    }
+    .stat-divider { width: 1px; height: 40px; background: #30363d; }
+
+    /* ── FOOTER ── */
+    .footer { text-align: center; color: #8b949e; font-size: 13px; padding: 8px 0; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- 1. HEADER -->
+    <div class="card header-card">
+      <div class="avatar-wrap">
+        <img src="Avatar/Avatar.png" alt="Trịnh Văn Duy" />
+      </div>
+      <div class="header-info">
+        <h1>Hi 👋, I'm Duy (Duytv)</h1>
+        <p class="subtitle">A passionate <strong>Senior Game Developer</strong> from Vietnam 🇻🇳</p>
+        <div class="badges">
+          <div class="badge role"><span class="label">🎮 ROLE</span>Senior Game Developer</div>
+          <div class="badge level"><span class="label">🔴 LEVEL</span>Tech Lead in Progress</div>
+          <div class="badge focus"><span class="label">⭐ FOCUS</span>Game Performance &amp; Scalability</div>
+        </div>
+        <p>I build high-performance, engaging, and scalable games across platforms.<br>Passionate about clean code, optimization, and mentoring teams.</p>
+      </div>
+    </div>
+
+    <!-- 2. CONTACT -->
+    <div class="card contact-card">
+      <a class="contact-item" href="https://duytv081298.github.io/Duytv081298/">
+        <div class="icon">🌐</div>
+        <div class="info">
+          <div class="contact-label">Portfolio</div>
+          <div class="contact-value">duytv081298.github.io</div>
+        </div>
+      </a>
+      <div class="contact-divider"></div>
+      <a class="contact-item" href="mailto:duytv0812@gmail.com">
+        <div class="icon">✉️</div>
+        <div class="info">
+          <div class="contact-label">Email</div>
+          <div class="contact-value">duytv0812@gmail.com</div>
+        </div>
+      </a>
+      <div class="contact-divider"></div>
+      <a class="contact-item" href="https://web.facebook.com/Duytv98">
+        <div class="icon">📘</div>
+        <div class="info">
+          <div class="contact-label">Facebook</div>
+          <div class="contact-value">Trịnh Duy</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- 3. ABOUT + SKILLS -->
+    <div class="two-col">
+      <div class="card about-card">
+        <h2>👤 About Me</h2>
+        <p>🎯 <strong>Current Focus:</strong> Building high-performance, engaging and scalable games and playable ads across Mobile, Web, and Instant Platforms.</p>
+        <p>🚀 <strong>Goal:</strong> Creating highly optimized, seamless web gaming experiences and mentoring development teams.</p>
+        <p>🌐 <strong>Based in Vietnam (VN)</strong></p>
+        <p>💬 <strong>Languages:</strong> Vietnamese (Native), English (Intermediate)</p>
+      </div>
+      <div class="card skills-card">
+        <h2>🎮 Character Stats (Skills)</h2>
+        <div class="skill-row">
+          <span class="skill-name">Main Engine (Cocos Creator)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:95%;background:#3B82F6"></div></div>
+            <span class="skill-label" style="color:#94a3b8">🖼 95%</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Cross Engine (Unity)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:85%;background:#4ADE80"></div></div>
+            <span class="skill-label" style="color:#94a3b8">⚙ 85%</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Logic &amp; Scripting (TypeScript / C# / JS)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:85%;background:#A855F7"></div></div>
+            <span class="skill-label" style="color:#A855F7">Expert</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Graphics API (WebGL)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:70%;background:#EF4444"></div></div>
+            <span class="skill-label" style="color:#EF4444">Proficient</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Backend &amp; Tools (NodeJS / Webpack)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:60%;background:#EAB308"></div></div>
+            <span class="skill-label" style="color:#EAB308">Intermediate</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-name">Database &amp; Services (Firebase)</span>
+          <div class="skill-right">
+            <div class="progress-track"><div class="progress-fill" style="width:50%;background:#F97316"></div></div>
+            <span class="skill-label" style="color:#F97316">Proficient</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. TECH STACK -->
+    <div class="card tech-card">
+      <h2>🧱 Tech Stack</h2>
+      <div class="tech-pills">
+        <span class="pill" style="background:#0a2e40;color:#55C2FF;border-color:#0c4a6e">Cocos Creator</span>
+        <span class="pill" style="background:#1a1a1a;color:#e6edf3;border-color:#30363d">Unity</span>
+        <span class="pill" style="background:#1e1b3a;color:#c084fc;border-color:#6d28d9">TypeScript</span>
+        <span class="pill" style="background:#1a1535;color:#818cf8;border-color:#4338ca">C#</span>
+        <span class="pill" style="background:#2a2000;color:#fbbf24;border-color:#92400e">JavaScript</span>
+        <span class="pill" style="background:#1a0a0a;color:#f87171;border-color:#991b1b">WebGL</span>
+        <span class="pill" style="background:#052e16;color:#4ade80;border-color:#166534">Node.js</span>
+        <span class="pill" style="background:#2d1800;color:#fb923c;border-color:#c2410c">Firebase</span>
+        <span class="pill" style="background:#200a0a;color:#fca5a5;border-color:#b91c1c">Git</span>
+        <span class="pill" style="background:#0a1a2e;color:#7dd3fc;border-color:#0369a1">Webpack</span>
+      </div>
+    </div>
+
+    <!-- 5. DEMO PROJECTS -->
+    <div class="card demo-card">
+      <h2>🖥️ Demo Projects</h2>
+      <div class="demo-grid">
+        <div class="demo-item">
+          <img src="Demo/screenshots/knit_away.png" alt="Knit Away" />
+          <div class="demo-content">
+            <a href="Demo/Playable/Knit Away/PA141_NhoFake_Duy_140526_applovin.html">
+              <span class="demo-title" style="color:#a855f7">🧶 Knit Away</span>
+            </a>
+            <p>Satisfying knitting puzzle game.<br>Built with Cocos Creator for AppLovin.</p>
+            <a class="demo-btn" href="Demo/Playable/Knit Away/PA141_NhoFake_Duy_140526_applovin.html"
+               style="color:#a855f7;border-color:#6d28d9;background:#1a0a2e">▶ Live Demo</a>
+          </div>
+        </div>
+        <div class="demo-item">
+          <img src="Demo/screenshots/cat_stack.png" alt="Cat Stack" />
+          <div class="demo-content">
+            <a href="Demo/Playable/Cat Stack/CatStack_V7_Duy_030426_applovin.html">
+              <span class="demo-title" style="color:#60a5fa">🐱 Cat Stack</span>
+            </a>
+            <p>Cute hyper-casual stacking game.<br>Built for high conversion rates.</p>
+            <a class="demo-btn" href="Demo/Playable/Cat Stack/CatStack_V7_Duy_030426_applovin.html"
+               style="color:#60a5fa;border-color:#1d4ed8;background:#0a1a2e">▶ Live Demo</a>
+          </div>
+        </div>
+        <div class="demo-item">
+          <img src="Demo/screenshots/farm_tap.png" alt="Farm Tap" />
+          <div class="demo-content">
+            <a href="Demo/Playable/Farm Tap/FarmTap_V83_Duy_110526_applovin.html">
+              <span class="demo-title" style="color:#4ade80">🌾 Farm Tap</span>
+            </a>
+            <p>Fun farm tapping &amp; merging game.<br>Optimized for mobile playable ads.</p>
+            <a class="demo-btn" href="Demo/Playable/Farm Tap/FarmTap_V83_Duy_110526_applovin.html"
+               style="color:#4ade80;border-color:#166534;background:#051a0a">▶ Live Demo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GitHub Statistics -->
+    <div class="card stats-github-card">
+      <h2>📊 GitHub Statistics</h2>
+      <div style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <img src="https://github-stats-extended.vercel.app/api?username=Duytv081298&show_icons=true&theme=tokyonight" alt="Duy's GitHub Stats" />
+        <img src="https://github-stats-extended.vercel.app/api/top-langs/?username=Duytv081298&layout=compact&theme=tokyonight" alt="Top Langs" />
+      </div>
+    </div>
+
+    <!-- Coding Activity -->
+    <div class="card coding-activity-card">
+      <h2>🐍 Coding Activity</h2>
+      <div style="display: flex; justify-content: center; align-items: center;">
+        <picture style="width: 100%;">
+          <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake-dark.svg">
+          <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake.svg">
+          <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/Duytv081298/Duytv081298/snake-assets/github-snake.svg" style="width: 100%; max-width: 100%; border-radius: 6px;">
+        </picture>
+      </div>
+    </div>
+
+    <!-- 6. STATS -->
+    <div class="card stats-card">
+      <div class="stat-item">
+        <div class="stat-num" style="color:#818cf8">📅 5+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num" style="color:#818cf8">🚀 10+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num" style="color:#f87171">❤️ 100%</div>
+        <div class="stat-label">Passion</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <div class="stat-num" style="color:#818cf8">♾️ ∞</div>
+        <div class="stat-label">Keep Learning</div>
+      </div>
+    </div>
+
+    <!-- 7. FOOTER -->
+    <div class="footer">© 2025 Duytv · Built with 💜 and ☕</div>
+
+  </div>
+</body>
+</html>

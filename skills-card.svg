@@ -1,0 +1,49 @@
+<svg width="460" height="240" xmlns="http://www.w3.org/2000/svg">
+  <!-- No background — blends with parent card -->
+
+  <!-- Header row -->
+  <line x1="0" y1="18" x2="460" y2="18" stroke="#30363d" stroke-width="0.5"/>
+  <text x="0" y="14" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" font-weight="600">Attribute</text>
+  <text x="460" y="14" font-family="'Segoe UI',sans-serif" font-size="11" fill="#8b949e" font-weight="600" text-anchor="end">Level / Mastery</text>
+
+  <!-- Row 1: Cocos Creator 95% -->
+  <text x="0" y="42" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Main Engine (Cocos Creator)</text>
+  <rect x="240" y="31" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="31" width="142" height="12" rx="6" fill="#3B82F6"/>
+  <text x="460" y="42" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#94a3b8" text-anchor="end">🖼 95%</text>
+  <line x1="0" y1="52" x2="460" y2="52" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Row 2: Unity 85% -->
+  <text x="0" y="76" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Cross Engine (Unity)</text>
+  <rect x="240" y="65" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="65" width="127" height="12" rx="6" fill="#4ADE80"/>
+  <text x="460" y="76" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#94a3b8" text-anchor="end">⚙ 85%</text>
+  <line x1="0" y1="86" x2="460" y2="86" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Row 3: TypeScript Expert -->
+  <text x="0" y="110" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Logic &amp; Scripting (TypeScript / C# / JS)</text>
+  <rect x="240" y="99" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="99" width="127" height="12" rx="6" fill="#A855F7"/>
+  <text x="460" y="110" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#A855F7" text-anchor="end" font-weight="700">Expert</text>
+  <line x1="0" y1="120" x2="460" y2="120" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Row 4: WebGL Proficient -->
+  <text x="0" y="144" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Graphics API (WebGL)</text>
+  <rect x="240" y="133" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="133" width="105" height="12" rx="6" fill="#EF4444"/>
+  <text x="460" y="144" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#EF4444" text-anchor="end" font-weight="700">Proficient</text>
+  <line x1="0" y1="154" x2="460" y2="154" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Row 5: Backend Intermediate -->
+  <text x="0" y="178" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Backend &amp; Tools (NodeJS / Webpack)</text>
+  <rect x="240" y="167" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="167" width="90" height="12" rx="6" fill="#EAB308"/>
+  <text x="460" y="178" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#EAB308" text-anchor="end" font-weight="700">Intermediate</text>
+  <line x1="0" y1="188" x2="460" y2="188" stroke="#21262d" stroke-width="0.5"/>
+
+  <!-- Row 6: Firebase Proficient -->
+  <text x="0" y="212" font-family="'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="#e6edf3">Database &amp; Services (Firebase)</text>
+  <rect x="240" y="201" width="150" height="12" rx="6" fill="#21262d"/>
+  <rect x="240" y="201" width="75" height="12" rx="6" fill="#F97316"/>
+  <text x="460" y="212" font-family="'Segoe UI',sans-serif" font-size="11.5" fill="#F97316" text-anchor="end" font-weight="700">Proficient</text>
+</svg>
