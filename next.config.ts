@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import os from "os";
 
 const isProd = process.env.NODE_ENV === 'production';
-const repoName = '/Portfolio'; // The repository name on GitHub
+const repoName = '/Duytv081298'; // The repository name on GitHub
 
 // Dynamically allow development access from local network IPs
 const devOrigins = ['localhost', 'localhost:3000', '127.0.0.1'];
