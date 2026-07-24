@@ -18,7 +18,7 @@
 
 <p align="center">
   <a href="https://duytv081298.github.io/Duytv081298/">
-    <img src="https://img.shields.io/badge/Portfolio-duytv081298.github.io-2563EB?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio" />
+    <img src="https://img.shields.io/badge/Portfolio-duytv081298.github.io%2FDuytv081298-2563EB?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio" />
   </a>
   <a href="mailto:duytv0812@gmail.com">
     <img src="https://img.shields.io/badge/Email-duytv0812%40gmail.com-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" />
@@ -70,38 +70,38 @@
 <table border="1" cellspacing="0" cellpadding="16" align="center">
   <tr>
     <td width="33%" align="center" valign="top">
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Knit%20Away/PA141_NhoFake_Duy_140526_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="Demo/screenshots/knit_away.png" width="220" alt="Knit Away" />
       </a>
       <br/><br/>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Knit%20Away/PA141_NhoFake_Duy_140526_applovin.html"><strong>🧶 Knit Away</strong></a>
+      <a href="https://duytv081298.github.io/Duytv081298/"><strong>🧶 Knit Away</strong></a>
       <br/>
       <p>Knitting puzzle · Cocos Creator<br/>AppLovin playable ad</p>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Knit%20Away/PA141_NhoFake_Duy_140526_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="https://img.shields.io/badge/▶_Live_Demo-6D28D9?style=for-the-badge" alt="Live Demo" />
       </a>
     </td>
     <td width="33%" align="center" valign="top">
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Cat%20Stack/CatStack_V7_Duy_030426_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="Demo/screenshots/cat_stack.png" width="220" alt="Cat Stack" />
       </a>
       <br/><br/>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Cat%20Stack/CatStack_V7_Duy_030426_applovin.html"><strong>🐱 Cat Stack</strong></a>
+      <a href="https://duytv081298.github.io/Duytv081298/"><strong>🐱 Cat Stack</strong></a>
       <br/>
       <p>Hyper-casual stacking · Unity<br/>High conversion playable ad</p>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Cat%20Stack/CatStack_V7_Duy_030426_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="https://img.shields.io/badge/▶_Live_Demo-1D4ED8?style=for-the-badge" alt="Live Demo" />
       </a>
     </td>
     <td width="33%" align="center" valign="top">
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Farm%20Tap/FarmTap_V83_Duy_110526_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="Demo/screenshots/farm_tap.png" width="220" alt="Farm Tap" />
       </a>
       <br/><br/>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Farm%20Tap/FarmTap_V83_Duy_110526_applovin.html"><strong>🌾 Farm Tap</strong></a>
+      <a href="https://duytv081298.github.io/Duytv081298/"><strong>🌾 Farm Tap</strong></a>
       <br/>
       <p>Tap &amp; merge farm · Cocos Creator<br/>Optimized for mobile ads</p>
-      <a href="https://duytv081298.github.io/Duytv081298/Demo/Playable/Farm%20Tap/FarmTap_V83_Duy_110526_applovin.html">
+      <a href="https://duytv081298.github.io/Duytv081298/">
         <img src="https://img.shields.io/badge/▶_Live_Demo-15803D?style=for-the-badge" alt="Live Demo" />
       </a>
     </td>
