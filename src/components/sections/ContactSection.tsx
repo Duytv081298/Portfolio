@@ -1,24 +1,21 @@
 'use client';
 
+import { useState } from 'react';
 import { Download, Gamepad2, Mail, MapPin, Send } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { FacebookIcon, GithubIcon } from '@/components/ui/BrandIcons';
 import RevealOnScroll from '@/components/ui/RevealOnScroll';
 import SectionHeader from '@/components/ui/SectionHeader';
+import CVModal from '@/components/ui/CVModal';
 
 const contactDetails = [
   { label: 'Email', value: 'duytv0812@gmail.com', Icon: Mail },
   { label: 'Location', value: 'Hanoi, Vietnam', Icon: MapPin },
 ];
 
-const contactActions = [
-  { label: 'GitHub', href: 'https://github.com/Duytv081298', Icon: GithubIcon },
-  { label: 'Facebook', href: 'https://web.facebook.com/Duytv98', Icon: FacebookIcon },
-  { label: 'Download CV', href: '#', Icon: Download },
-];
-
 export default function ContactSection() {
   const reduceMotion = useReducedMotion();
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
   return (
     <section id="contact" className="relative overflow-hidden border-t border-border/50 bg-bg-secondary/45 py-10 md:py-12">
@@ -78,25 +75,49 @@ export default function ContactSection() {
             </div>
 
             <div className="flex flex-col justify-center gap-2.5 p-6">
-              {contactActions.map(({ label, href, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('http') ? '_blank' : undefined}
-                  rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="group flex min-h-10 items-center justify-between rounded-lg border border-border bg-bg-primary/35 px-4 text-[11px] font-semibold text-text-secondary transition-all duration-200 hover:border-primary/45 hover:bg-primary/8 hover:text-text"
-                >
-                  <span className="flex items-center gap-3">
-                    <Icon size={14} className="text-[#8FA4BE] transition-colors group-hover:text-primary" aria-hidden="true" />
-                    {label}
-                  </span>
-                  <Send size={11} className="text-text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
-                </a>
-              ))}
+              <a
+                href="https://github.com/Duytv081298"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex min-h-10 items-center justify-between rounded-lg border border-border bg-bg-primary/35 px-4 text-[11px] font-semibold text-text-secondary transition-all duration-200 hover:border-primary/45 hover:bg-primary/8 hover:text-text"
+              >
+                <span className="flex items-center gap-3">
+                  <GithubIcon size={14} className="text-[#8FA4BE] transition-colors group-hover:text-primary" aria-hidden="true" />
+                  GitHub
+                </span>
+                <Send size={11} className="text-text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+              </a>
+
+              <a
+                href="https://web.facebook.com/Duytv98"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex min-h-10 items-center justify-between rounded-lg border border-border bg-bg-primary/35 px-4 text-[11px] font-semibold text-text-secondary transition-all duration-200 hover:border-primary/45 hover:bg-primary/8 hover:text-text"
+              >
+                <span className="flex items-center gap-3">
+                  <FacebookIcon size={14} className="text-[#8FA4BE] transition-colors group-hover:text-primary" aria-hidden="true" />
+                  Facebook
+                </span>
+                <Send size={11} className="text-text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setIsCVModalOpen(true)}
+                className="group flex min-h-10 cursor-pointer items-center justify-between rounded-lg border border-border bg-bg-primary/35 px-4 text-[11px] font-semibold text-text-secondary transition-all duration-200 hover:border-primary/45 hover:bg-primary/8 hover:text-text"
+              >
+                <span className="flex items-center gap-3">
+                  <Download size={14} className="text-[#8FA4BE] transition-colors group-hover:text-primary" aria-hidden="true" />
+                  Download CV
+                </span>
+                <Send size={11} className="text-text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true" />
+              </button>
             </div>
           </div>
         </RevealOnScroll>
       </div>
+
+      <CVModal isOpen={isCVModalOpen} onClose={() => setIsCVModalOpen(false)} />
     </section>
   );
 }

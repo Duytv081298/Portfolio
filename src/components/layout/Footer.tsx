@@ -1,38 +1,60 @@
 'use client';
 
+import type { MouseEvent } from 'react';
 import { ArrowUp, Gamepad2 } from 'lucide-react';
-import { useReducedMotion } from 'motion/react';
 
 export default function Footer() {
-  const reduceMotion = useReducedMotion();
+  const scrollToTop = (e: MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    // 1. Scroll window smooth
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    } catch {
+      window.scrollTo(0, 0);
+    }
+
+    // 2. Direct DOM scrollIntoView fallback
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // 3. Document scrollTop fallbacks
+    if (typeof document !== 'undefined') {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
   };
 
   return (
-    <footer className="relative border-t border-border/70 bg-bg-primary">
-      <div className="section-container flex min-h-[76px] flex-col items-center justify-between gap-3 py-4 sm:flex-row">
-        <div className="flex items-center gap-2.5">
-          <span className="grid h-7 w-7 place-items-center rounded-full border border-primary/25 bg-primary/10">
-            <Gamepad2 size={14} className="text-primary" aria-hidden="true" />
+    <footer className="relative z-30 border-t border-border/70 bg-bg-primary/95 py-6">
+      <div className="section-container flex flex-col items-center justify-between gap-4 sm:flex-row">
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <span className="grid h-9 w-9 place-items-center rounded-xl border border-primary/30 bg-primary/10 shadow-[0_0_12px_rgba(79,142,247,0.15)]">
+            <Gamepad2 size={18} className="text-primary" aria-hidden="true" />
           </span>
-          <span className="font-display text-[10px] font-bold uppercase tracking-[0.08em] text-text">
+          <span className="font-display text-sm font-extrabold uppercase tracking-[0.1em] text-text">
             Duy <span className="text-primary">Dev</span>
           </span>
         </div>
 
-        <p className="font-code text-[8px] text-text-muted">
-          © {new Date().getFullYear()} Trịnh Văn Duy. Built with <span className="text-[#E15B64]">♥</span> and lots of ☕
+        {/* Copyright & Info */}
+        <p className="font-code text-xs text-text-secondary text-center sm:text-left">
+          © {new Date().getFullYear()} Trịnh Văn Duy. Built with <span className="text-[#E15B64] font-bold">♥</span> and lots of ☕
         </p>
 
+        {/* Back to top Button */}
         <button
           type="button"
           onClick={scrollToTop}
-          className="flex min-h-10 items-center gap-2 rounded-lg px-3 font-code text-[8px] uppercase tracking-[0.08em] text-text-muted transition-colors hover:bg-card hover:text-primary"
+          className="group relative z-30 flex min-h-11 cursor-pointer pointer-events-auto items-center gap-2.5 rounded-xl border border-white/15 bg-white/5 px-4 py-2 font-code text-xs font-bold uppercase tracking-wider text-text-secondary transition-all hover:border-primary/50 hover:bg-primary/15 hover:text-primary active:scale-95 shadow-md"
           aria-label="Back to top"
         >
-          Back to top <ArrowUp size={11} aria-hidden="true" />
+          <span>Back to top</span>
+          <ArrowUp size={16} className="transition-transform group-hover:-translate-y-1 text-primary" aria-hidden="true" />
         </button>
       </div>
     </footer>

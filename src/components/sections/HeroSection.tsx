@@ -1,16 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { BriefcaseBusiness, Download, Gamepad2, Layers3, Play, Zap } from 'lucide-react';
 import { GithubIcon, FacebookIcon } from '@/components/ui/BrandIcons';
 import MagneticButton from '@/components/ui/MagneticButton';
 import GlowOrb from '@/components/effects/GlowOrb';
+import CVModal from '@/components/ui/CVModal';
 import { playableAds } from '@/data/playableAds';
 
 const stats = [
   { value: '30+', label: 'Projects', color: '#3EA6FF', Icon: Layers3 },
   { value: '5+', label: 'Years Exp.', color: '#00DFA2', Icon: Zap },
-  { value: '5+', label: 'Game Studios', color: '#9B74FF', Icon: BriefcaseBusiness },
+  { value: '4', label: 'Companies', color: '#9B74FF', Icon: BriefcaseBusiness },
   { value: 'HTML5', label: 'Cocos Creator', color: '#8AB4FF', Icon: Gamepad2 },
 ];
 
@@ -35,6 +37,7 @@ const heroGames = playableAds.filter((ad) => ad.icon).slice(0, iconPositions.len
 
 export default function HeroSection() {
   const reduceMotion = useReducedMotion();
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
   const openGame = (slug: string) => {
     window.dispatchEvent(new CustomEvent('play-game', { detail: { slug } }));
@@ -116,7 +119,7 @@ export default function HeroSection() {
                 <Play size={15} fill="currentColor" aria-hidden="true" />
                 Play Demo Games
               </MagneticButton>
-              <MagneticButton variant="ghost" size="md" href="#" className="min-h-12 min-w-[225px] text-sm font-semibold">
+              <MagneticButton variant="ghost" size="md" onClick={() => setIsCVModalOpen(true)} className="min-h-12 min-w-[225px] text-sm font-semibold">
                 <Download size={15} aria-hidden="true" />
                 Download CV
               </MagneticButton>
@@ -200,6 +203,8 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
+
+      <CVModal isOpen={isCVModalOpen} onClose={() => setIsCVModalOpen(false)} />
     </section>
   );
 }

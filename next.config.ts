@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import os from "os";
+import path from "path";
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -45,6 +46,9 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_BASE_PATH: isProd ? repoName : '',
   },
   allowedDevOrigins: devOrigins,
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
 };
 
 export default nextConfig;
